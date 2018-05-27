@@ -8,20 +8,20 @@
 	 z-index:1;
 	 opacity:0;
 	 top:10px;
-	 left:580px;
+	 left:680px;
 	 position:absolute;
 	 }
- }
+
 	#but{
-	z-index:1;
+	z-index:2;
 	opacity:0;
 	top:200px;
-	left:850px;
+	left:870px;
 	position:absolute;
 	}
 	#ifr{
 	border:0;
-	z-index:2;
+	z-index:3;
 	width:100%;
 	height:100%;
 
@@ -29,11 +29,11 @@
 </style>
 <body>
 <iframe id=ifr src="https://www.baidu.com"></iframe>
-<button id=butt onclick="but()"><img src=face.png>
-<button id=but onclick="but()"><img src=face.png>
+<button id="butt" onclick="but()"><img src=face.png>
+<button id="but" onclick="but()"><img src=face.png>
 <script type="text/javascript">
 	function but(){
-		alert('haha')
+		alert('haha');
 	}
 </script>
 </body>
