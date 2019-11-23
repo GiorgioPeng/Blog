@@ -355,3 +355,85 @@ void main(){
 ```
 
 当然啦，懒得写的同学可以直接调用 algorithm 头文件中的 sort（数组起始位置，数组结束位置） 来进行排序
+
+## 连续自然数之和
+> 如何求一个自然数等于多个连续自然数之和呢? 例如 10 可以写成 1+2+3+4, 在这里提供两种方法
+- 方法一: 优化后的暴力枚举法
+优化过程:   
+假设 x1+x2+x3+....+xn = s, 其中 s 为给定的自然数  
+由等差数列求和公式可得:    
+(x1+xn)\*n/2 = s  
+=> (x1+xn)(xn-x1+1) = 2s 因为xn-x1+1就是项数  
+假设 x1+xn = a, xn-x1+1 = b, 联立解得 xn=(a+b-1)/2    x1 = (a-b+1)/2  
+因为 xn 和 x1都为整数,那么 a+b-1 和 a-b+1 都应该为偶数  
+如果s为奇数, 那么 s 可以写成 2\*i+1, 即 i+(i+1), 那么 s 必然能够拆成两个自然数之和  
+如果s为偶数, 那么 s 可以写成 2^i\*3^j\*4^k..... 如果 除了 i  之外全部都是0 ,那么 s 是2 的幂  
+
+```c
+#include <iostream>
+using namespace std;
+int main(){
+  int n;//给定的数
+  cin>>n;
+  int sum;
+  for(int i = 1;i<n/2;i++){
+    sum = 0;
+    for(int j = i;i<n/2;j++){
+      sum += j;
+      if(sum==n){
+        cout<<i<<' '<<j<<endl;
+      }
+      else{
+        if(sum>n){
+          break;
+        }
+      }
+    }
+  }
+  return 0;
+}
+```
+
+- 方法二: 有限制的简化算法
+假设 x1+x2+x3+....+xn = s, 其中 s 为给定的自然数  
+可知: n\*x1+(1+n-1)(n-1)/2=s  
+=> 2n\*x1+n^2-n-2s=0  
+=> n^2+(2\*x1-1)n-2s=0  
+因为n时连续项数的个数,那么它必然是一个正整数, 根据求根公式:  
+Δ = 4\*x1^2+1-4\*x1+8s  
+n = ((1-2\*x1)+sqrt(Δ))/2  
+因此可以获得d两个约束条件:  
+  1. sqrt(Δ)为整数, 因为这样才有可能使得n为整数
+  2. ((1-2\*x1)+sqrt(Δ)) 为 偶数
+:::danger
+因为出现了乘法,当数值较大的时候可能导致溢出范围,这也就是"限制"
+:::
+```c
+#include <math.h>
+#include <iostream>
+using namespace std;
+int main(){
+  int n; //n为给定的数
+  cin>>n;
+  int der;
+  int fenzi;
+  double temp;
+  for(int i = 1;i<n/2;i++){//因为起始数不可能大于n/2, 不然随便一加就超过给定数了
+    temp = sqrt(4*i*i+1-4*i+8*n);
+    der = (int)temp==temp?temp:0;//判断Δ是否为整数
+    if(der!=0){
+      fenzi = 1-2*i+der;
+      if(fenzi>0&&fenzi%2==0){
+        cout<<i<<' '<<i+fenzi/2-1<<endl;
+      }
+      else{
+        continue;
+      }
+    }
+    else{
+      continue;
+    }
+  }
+  return 0;
+}
+```
