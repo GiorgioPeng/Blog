@@ -1,0 +1,79 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>SQL注入 | Hexo</title><script src="https://cdn.bootcss.com/valine/1.4.4/Valine.min.js"></script><script src="https://cdn.bootcdn.net/ajax/libs/mermaid/8.8.2/mermaid.min.js"></script><script>mermaid.initialize({
+  startOnLoad: true
+  , theme: 'dark'
+});</script><link rel="stylesheet" href="/css/arknights.css"><link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/highlight.js/10.1.2/styles/atom-one-dark-reasonable.min.css"><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><meta name="generator" content="Hexo 5.4.0"></head><body><header><nav><a href="/">Home</a><a href="/archives/">Archives</a></nav></header><main><article><div id="post-bg"><div id="post-title"><h1>SQL注入</h1><hr></div><div id="post-content"><h2 id="sql-注入准备知识"><a href="#sql-注入准备知识" class="headerlink" title="sql 注入准备知识"></a>sql 注入准备知识</h2><blockquote>
+<p>原文在我的 csdn 博客上<br>传送门 =&gt; <a target="_blank" rel="noopener" href="https://blog.csdn.net/Q_giorgio/article/details/88750624"></a><br>这篇文章会介绍一些 sql 注入的准备知识，都是基于 mysql 数据库的</p>
+</blockquote>
+<p><strong>sql 语言是什么：</strong> 一种功能极强的关系数据库标准语言，不需要定义如何访问数据库，只需要告诉数据库要做什么</p>
+<p><strong>sql 语言的主要功能</strong> :</p>
+<ul>
+<li>查询</li>
+<li>操纵</li>
+<li>定义</li>
+<li>控制</li>
+</ul>
+<hr>
+<h3 id="常用的-sql-注入中的函数："><a href="#常用的-sql-注入中的函数：" class="headerlink" title="常用的 sql 注入中的函数："></a>常用的 sql 注入中的函数：</h3><p><strong>基本数据库信息</strong></p>
+<ul>
+<li>@@version 和 version() 查询数据库的版本信息</li>
+<li>user() 查询用户名</li>
+<li>current_user() 查询当前用户名</li>
+<li>system_user() 查询系统用户名</li>
+<li>session_user() 查询链接数据库的用户名</li>
+<li>database() 查询当前使用的数据库名</li>
+<li>@@datadir 查询数据库的路径</li>
+<li>@@version_compile_os 查询操作系统</li>
+<li>@@basedir     查询数据库安装路径</li>
+</ul>
+<p> <strong>操作查询出的数据函数</strong></p>
+<ul>
+<li>concat（多个字段名）  连接数据，例如 concat(username,password), 将连个字段连接成一个字段，中间没有任何符号分割，但是可以自己指定分割符，如 concat(username,’~’,password)</li>
+<li>concat_ws(‘分隔符’, 多个字段名）, 可以直接指定分隔符，如果分隔符在中间，如 concat_ws(username,’~’,password), 查询结果会变成 ~usernamepassword</li>
+<li>ascii(string) 返回参数的第一位的 ascii 码值</li>
+<li>ord(string) 返回参数的第一位的 ascii 码值</li>
+<li>substr(string,start,lenth) 切割字符串，返回切割后的结果，通常和 ASCII() 连用</li>
+<li>mid() 和 substr() 类似</li>
+<li>length(string) 返回参数的长度</li>
+<li>group_concat（可以多个字段字段名） 将多行结果连接成一行返回出来，通常在查询时页面只能显示一行结果时使用，能较为快捷的获得所有数据，如果用多个字段名，会返回类似 concat() 拼接的结果然后再组成一行</li>
+<li>count（单个字段名） 返回该字段名下一共有多少个结果</li>
+<li>left(string,number) 返回 string 中 从左往右数共 Number 个字符</li>
+<li>floor(number) 返回小于等于 number 的最大整数</li>
+<li>rand() 返回 0 到 1 之间的一个随机数</li>
+<li>sleep(time) 休眠多少秒</li>
+</ul>
+<hr>
+<h3 id="常见疑惑："><a href="#常见疑惑：" class="headerlink" title="常见疑惑："></a>常见疑惑：</h3><blockquote>
+<p>我初期学习的时候一直感到疑惑的语句，在这里记录一下</p>
+</blockquote>
+<p> <strong>select 1,2 这种语句是干什么的？</strong></p>
+<p> <em>在 sql 语句查询中，如果使用 Union 进行联合查询，union 前后结果的列的数量不同会导致报错，这里 1,2 等就起一个占位的作用，select 某个常量值就会直接返回这个常量</em></p>
+<p> 如 select username,password from users union select schema_name from information_schema.schemata 会报错，因为前面的语句 select username,password from users 返回结果为：</p>
+<table>
+<thead>
+<tr>
+<th>username</th>
+<th>password</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>username1</td>
+<td>password</td>
+</tr>
+</tbody></table>
+<p>而后面返回的结果为<br>| schema_name|<br>|–|<br>| schema_name1 |</p>
+<p>两边的列的数量不一样<br>但是如果这时我使用   select username,password from users union select 1,schema_name from information_schema.schemata</p>
+<p>返回结果就是<br>|username|password |<br>|–|–|<br>|username1|password1|<br>|username2|password2|<br>|1|schema_name1|<br>|1|schema_name2|</p>
+<p>由此可见，这个 1 仅仅是一个占位作用<br>当然为了更加明了，有时候我们也可以 select 一个字符串常量，如<br>select username,password from users union select “database name: “,schema_name from information_schema.schemata<br>返回结果就是<br>|username|password |<br>|–|–|<br>|username1|password1|<br>|username2|password2|<br>|database name: |schema_name1|<br>|database name:|schema_name2|</p>
+<div id="paginator"></div></div><div id="post-footer"><hr><a href="/2018/09/11/Grid%E5%B8%83%E5%B1%80/">← Prev Grid布局</a><span style="color: #fe2"> | </span><a href="/2018/06/11/XSS/">XSS Next →</a><hr></div><div id="bottom-btn"><a id="to-index" href="#post-index" title="index">≡</a><a id="to-top" href="#post-title" title="to top">∧</a></div><div id="Valine"></div><script>new Valine({
+ el: '#Valine'
+ , appId: ''
+ , appKey: ''
+ , placeholder: '此条评论委托企鹅物流发送'
+})</script></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><a target="_blank" rel="noopener" href="https://github.com/giorgiopeng" id="avatar"><img src="https://avatars.githubusercontent.com/u/34415646?s=400&amp;u=f92ecb53f2f9fb9a9a5b054d6d56239fc1a80f0f&amp;v=4" alt="Avatar"></a><h1 id="Dr"><a target="_blank" rel="noopener" href="https://github.com/GiorgioPeng"> Dr.Giorgio</a></h1><section id="total"><a id="total-archives" href="/archives"><span class="total-title">Archives Total:</span><span class="total-number">18</span></a><div id="total-tags"><span class="total-title">Tags:</span><span class="total-number">3</span></div><div id="total-categories"><span class="total-title">Categories:</span><span class="total-number">11</span></div></section></div><div id="aside-block"></div><footer><nobr><span class="text-title">©</span><span class="text-content">2016 to 2022</span></nobr><wbr><nobr><span class="text-title">ICP</span><span class="text-content">——无——</span></nobr><wbr><wbr></footer></aside></main><canvas id="canvas-dust"></canvas><script src="/js/arknights.js"></script><script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/10.1.2/highlight.min.js"></script></body></html>

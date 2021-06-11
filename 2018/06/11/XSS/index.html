@@ -1,0 +1,36 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>XSS | Hexo</title><script src="https://cdn.bootcss.com/valine/1.4.4/Valine.min.js"></script><script src="https://cdn.bootcdn.net/ajax/libs/mermaid/8.8.2/mermaid.min.js"></script><script>mermaid.initialize({
+  startOnLoad: true
+  , theme: 'dark'
+});</script><link rel="stylesheet" href="/css/arknights.css"><link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/highlight.js/10.1.2/styles/atom-one-dark-reasonable.min.css"><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><meta name="generator" content="Hexo 5.4.0"></head><body><header><nav><a href="/">Home</a><a href="/archives/">Archives</a></nav></header><main><article><div id="post-bg"><div id="post-title"><h1>XSS</h1><hr></div><div id="post-content"><h2 id="XSS（跨站脚本攻击）"><a href="#XSS（跨站脚本攻击）" class="headerlink" title="XSS（跨站脚本攻击）"></a>XSS（跨站脚本攻击）</h2><p>常见 XSS 类型：</p>
+<ul>
+<li>存储型 XSS</li>
+<li>反射型 XSS</li>
+<li>DOM 型 XSS</li>
+</ul>
+<hr>
+<p>存储型 XSS: 攻击者先再页面中插入恶意 JS 代码，随后用户访问带有恶意代码的页面</p>
+<blockquote>
+<p>挖掘：找到能向数据库传递，并且能够再次访问（常见留言，评论等）</p>
+</blockquote>
+<p>反射型 XSS: 攻击者在 URL 中插入 XSS 代码，服务端将 URL 中的 XSS 代码输出到页面上，攻击者将带有 XSS 代码的 URL 发送给用户，用户打开后受到 XSS 攻击</p>
+<blockquote>
+<p>挖掘：找到能传入 URL 参数的地方（常见于搜索）</p>
+</blockquote>
+<p>DOM 型 XSS: 攻击者在 URL 中插入 XSS 代码，前端页面直接从 URL 中获取 XSS 代码并且输出到页面，导致 XSS 代码的执行，攻击者将带有 XSS 代码的 URL 发送给用户，用户打开后受到 XSS 攻击</p>
+<blockquote>
+<p>挖掘：看 JS 代码</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="http://xssor.io/">一个工具</a><br><a target="_blank" rel="noopener" href="https://www.my-debugbar.com/wiki/IETester/HomePage">IE 测试工具</a></p>
+<div id="paginator"></div></div><div id="post-footer"><hr><a href="/2018/07/11/SQL%E6%B3%A8%E5%85%A5/">← Prev SQL注入</a><span style="color: #fe2"> | </span><a href="/2018/04/11/CSS%E9%9A%8F%E6%89%8B%E8%AE%B0/">CSS随手记 Next →</a><hr></div><div id="bottom-btn"><a id="to-index" href="#post-index" title="index">≡</a><a id="to-top" href="#post-title" title="to top">∧</a></div><div id="Valine"></div><script>new Valine({
+ el: '#Valine'
+ , appId: ''
+ , appKey: ''
+ , placeholder: '此条评论委托企鹅物流发送'
+})</script></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><a target="_blank" rel="noopener" href="https://github.com/giorgiopeng" id="avatar"><img src="https://avatars.githubusercontent.com/u/34415646?s=400&amp;u=f92ecb53f2f9fb9a9a5b054d6d56239fc1a80f0f&amp;v=4" alt="Avatar"></a><h1 id="Dr"><a target="_blank" rel="noopener" href="https://github.com/GiorgioPeng"> Dr.Giorgio</a></h1><section id="total"><a id="total-archives" href="/archives"><span class="total-title">Archives Total:</span><span class="total-number">18</span></a><div id="total-tags"><span class="total-title">Tags:</span><span class="total-number">3</span></div><div id="total-categories"><span class="total-title">Categories:</span><span class="total-number">11</span></div></section></div><div id="aside-block"></div><footer><nobr><span class="text-title">©</span><span class="text-content">2016 to 2022</span></nobr><wbr><nobr><span class="text-title">ICP</span><span class="text-content">——无——</span></nobr><wbr><wbr></footer></aside></main><canvas id="canvas-dust"></canvas><script src="/js/arknights.js"></script><script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/10.1.2/highlight.min.js"></script></body></html>

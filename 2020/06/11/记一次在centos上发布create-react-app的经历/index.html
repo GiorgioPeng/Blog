@@ -1,0 +1,152 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>记一次在centos上发布create-react-app的经历 | Hexo</title><script src="https://cdn.bootcss.com/valine/1.4.4/Valine.min.js"></script><script src="https://cdn.bootcdn.net/ajax/libs/mermaid/8.8.2/mermaid.min.js"></script><script>mermaid.initialize({
+  startOnLoad: true
+  , theme: 'dark'
+});</script><link rel="stylesheet" href="/css/arknights.css"><link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/highlight.js/10.1.2/styles/atom-one-dark-reasonable.min.css"><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><meta name="generator" content="Hexo 5.4.0"></head><body><header><nav><a href="/">Home</a><a href="/archives/">Archives</a></nav></header><main><article><div id="post-bg"><div id="post-title"><h1>记一次在centos上发布create-react-app的经历</h1><hr></div><div id="post-content"><h2 id="安装nodejs"><a href="#安装nodejs" class="headerlink" title="安装nodejs"></a>安装nodejs</h2><ul>
+<li>安装wget</li>
+<li><ul>
+<li>yum install -y wget</li>
+</ul>
+</li>
+<li>在<a target="_blank" rel="noopener" href="https://nodejs.org/en/download/">官网</a>找到想要的版本,安装</li>
+<li><ul>
+<li>cd ~</li>
+</ul>
+</li>
+<li><ul>
+<li>wget <a target="_blank" rel="noopener" href="https://nodejs.org/dist/v9.3.0/node-v9.3.0-linux-x64.tar.xz">https://nodejs.org/dist/v9.3.0/node-v9.3.0-linux-x64.tar.xz</a></li>
+</ul>
+</li>
+<li>解压</li>
+<li><ul>
+<li>xz -d node-v9.3.0-linux-x64.tar.xz</li>
+</ul>
+</li>
+<li><ul>
+<li>tar -xf node-v9.3.0-linux-x64.tar</li>
+</ul>
+</li>
+<li>添加软连接(nodejs装好了就别动位置了, 装的时候尽量找一个想要的位置,,懒得找)</li>
+<li><ul>
+<li>ln -s ~/node-v9.3.0-linux-x64/bin/node /usr/bin/node</li>
+</ul>
+</li>
+<li><ul>
+<li>ln -s ~/node-v9.3.0-linux-x64/bin/npm /usr/bin/npm</li>
+</ul>
+</li>
+<li>检查是否安装好</li>
+<li><ul>
+<li>node -v</li>
+</ul>
+</li>
+<li><ul>
+<li>npm -v<h2 id="安装apache"><a href="#安装apache" class="headerlink" title="安装apache"></a>安装apache</h2></li>
+</ul>
+</li>
+<li>安装</li>
+<li><ul>
+<li>yum list | grep httpd</li>
+</ul>
+</li>
+<li><ul>
+<li>yum install httpd </li>
+</ul>
+</li>
+<li>启动</li>
+<li><ul>
+<li>systemctl start httpd       //开机自启动</li>
+</ul>
+</li>
+<li><ul>
+<li>systemctl enable httpd        //也可以用一下方式启动</li>
+</ul>
+</li>
+<li><ul>
+<li>service httpd start      　//如果执行service httpd start命令出现</li>
+</ul>
+</li>
+<li>删掉/var/www/html文件中的内容<h2 id="打包项目"><a href="#打包项目" class="headerlink" title="打包项目"></a>打包项目</h2></li>
+<li>在package.json中添加</li>
+<li><ul>
+<li>“home”:”.”</li>
+</ul>
+</li>
+<li>打包</li>
+<li><ul>
+<li>yarn build</li>
+</ul>
+</li>
+<li>移动</li>
+<li><ul>
+<li>mv build * /var/www/html<h2 id="成功"><a href="#成功" class="headerlink" title="成功"></a>成功</h2></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题:"></a>问题:</h2><ul>
+<li>运行yarn 安装项目依赖的时候出现类似 symbol SSL_set_cert_cb 的问题</li>
+<li><ul>
+<li>安装工具包</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>yum -y install yum-utils</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li>安装或者更新openssl</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>安装 yum -y install openssl</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>更新 yum -y update openssl</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li>启用</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>yum-config-manager –enable cr  </li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>yum update</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li>再次yarn 安装依赖</li>
+</ul>
+</li>
+</ul>
+<div id="paginator"></div></div><div id="post-footer"><hr><a href="/2020/06/11/React%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E8%B7%A8%E5%9F%9F%E9%85%8D%E7%BD%AE/">React开发环境跨域配置 Next →</a><hr></div><div id="bottom-btn"><a id="to-index" href="#post-index" title="index">≡</a><a id="to-top" href="#post-title" title="to top">∧</a></div><div id="Valine"></div><script>new Valine({
+ el: '#Valine'
+ , appId: ''
+ , appKey: ''
+ , placeholder: '此条评论委托企鹅物流发送'
+})</script></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><a target="_blank" rel="noopener" href="https://github.com/giorgiopeng" id="avatar"><img src="https://avatars.githubusercontent.com/u/34415646?s=400&amp;u=f92ecb53f2f9fb9a9a5b054d6d56239fc1a80f0f&amp;v=4" alt="Avatar"></a><h1 id="Dr"><a target="_blank" rel="noopener" href="https://github.com/GiorgioPeng"> Dr.Giorgio</a></h1><section id="total"><a id="total-archives" href="/archives"><span class="total-title">Archives Total:</span><span class="total-number">18</span></a><div id="total-tags"><span class="total-title">Tags:</span><span class="total-number">3</span></div><div id="total-categories"><span class="total-title">Categories:</span><span class="total-number">11</span></div></section></div><div id="aside-block"></div><footer><nobr><span class="text-title">©</span><span class="text-content">2016 to 2022</span></nobr><wbr><nobr><span class="text-title">ICP</span><span class="text-content">——无——</span></nobr><wbr><wbr></footer></aside></main><canvas id="canvas-dust"></canvas><script src="/js/arknights.js"></script><script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/10.1.2/highlight.min.js"></script></body></html>

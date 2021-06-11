@@ -1,0 +1,443 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>使用C实现快速排序以及快速排序讲解 | Hexo</title><script src="https://cdn.bootcss.com/valine/1.4.4/Valine.min.js"></script><script src="https://cdn.bootcdn.net/ajax/libs/mermaid/8.8.2/mermaid.min.js"></script><script>mermaid.initialize({
+  startOnLoad: true
+  , theme: 'dark'
+});</script><link rel="stylesheet" href="/css/arknights.css"><link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/highlight.js/10.1.2/styles/atom-one-dark-reasonable.min.css"><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><meta name="generator" content="Hexo 5.4.0"></head><body><header><nav><a href="/">Home</a><a href="/archives/">Archives</a></nav></header><main><article><div id="post-bg"><div id="post-title"><h1>使用C实现快速排序以及快速排序讲解</h1><hr></div><div id="post-content"><blockquote>
+<p>这里只讨论单主元的快速排序</p>
+</blockquote>
+<p><strong>概述</strong><br>快速排序用的非常广泛，它可以说目前一种在时间和空间上都比较理想的排序算法，平均复杂度是 O(NlogN)<br>为什么快排比冒泡或者插入等排序方式要快呢？因为快排并不是逐位比较交换的，它的交换跨度很大。<br>主元位置选取一般有两种方式，一种是把主元放在第一位，另一种是把主元放在倒数第一位<br>:::tip<br>选取主元时，可以比较一下头，尾，中 三个元素的大小，选中间那个，因为主元选取和算法的时间关系非常大<br>:::</p>
+<ul>
+<li>如果选择第一位作为主元位的话，则需要后面的指针先移动，因为要确保最终和主元位交换的元素是小于等于主元的</li>
+<li>如果选择最后一位作为主元的话，则需要前面的指针先移动，因为要确保最终和主元位交换的元素是大于等于主元的</li>
+</ul>
+<p><em>这里使用第一位作为主元的方式来介绍一下</em></p>
+<p>有下面这样一个数组 arr<br>我们的想法是将这个数组中所有比主元大的都移动到主元的右边，比主元小的都移动到主元你的左边（也就是最终实现一个升序排列）</p>
+<table>
+<thead>
+<tr>
+<th align="center">0</th>
+<th align="center">1</th>
+<th align="center">2</th>
+<th align="center">3</th>
+<th align="center">4</th>
+<th align="center">5</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">57</td>
+<td align="center">20</td>
+<td align="center">32</td>
+<td align="center">69</td>
+<td align="center">124</td>
+<td align="center">38</td>
+</tr>
+<tr>
+<td align="center">pivot,i</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">j</td>
+</tr>
+</tbody></table>
+<ol>
+<li><p>选取主元为 arr[0] &nbsp; ( pivot = 57 )<br>有一个左指针 i 指向该片段第一个元素 &nbsp; ( i = 0 )<br>有一个右指针 j 指向该片段最后一个元素 &nbsp; ( j = 5 )</p>
+</li>
+<li><p>发现 j 指向的元素 (38) 比主元小，应该放在左边去，所以 j 就停在了这里  &nbsp; ( j = 5 )<br>发现 i 的值比主元小，那么 i 就一直往后走，直到 i 指向元素 69 时发现该元素比主元大，应该放在右边去，所以 i 就停在了这里  &nbsp; ( i = 3 )<br>此时交换 i, j 指向的元素值</p>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th align="center">0</th>
+<th align="center">1</th>
+<th align="center">2</th>
+<th align="center">3</th>
+<th align="center">4</th>
+<th align="center">5</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">57</td>
+<td align="center">20</td>
+<td align="center">32</td>
+<td align="center">38</td>
+<td align="center">124</td>
+<td align="center">69</td>
+</tr>
+<tr>
+<td align="center">pivot</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">i</td>
+<td align="center"></td>
+<td align="center">j</td>
+</tr>
+</tbody></table>
+<ol start="3">
+<li> 这时候 又到 j 移动了，j 发现前一个元素比主元大，于是继续往前走，发现和 i 相遇了，这时候交换主元与 i, j 同时指向的这个元素</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th align="center">0</th>
+<th align="center">1</th>
+<th align="center">2</th>
+<th align="center">3</th>
+<th align="center">4</th>
+<th align="center">5</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">57</td>
+<td align="center">20</td>
+<td align="center">32</td>
+<td align="center">38</td>
+<td align="center">124</td>
+<td align="center">69</td>
+</tr>
+<tr>
+<td align="center">pivot</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">i,j</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<p>  得到</p>
+<table>
+<thead>
+<tr>
+<th align="center">0</th>
+<th align="center">1</th>
+<th align="center">2</th>
+<th align="center">3</th>
+<th align="center">4</th>
+<th align="center">5</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">38</td>
+<td align="center">20</td>
+<td align="center">32</td>
+<td align="center">57</td>
+<td align="center">124</td>
+<td align="center">69</td>
+</tr>
+<tr>
+<td align="center">pivot</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">i,j</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<p>  这时候就发现元素 57 左边的都比 57 要小，右边的都比 57 要大<br>  这时候我们的第一轮排序就完成了（每次主元交换之后就算一轮排序完成）</p>
+<ol start="4">
+<li>我们第二轮排序从 57 的左边开始<br>i = 0<br>pivot = 38<br>j = 3-2 = 2</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th align="center">0</th>
+<th align="center">1</th>
+<th align="center">2</th>
+<th align="center">3</th>
+<th align="center">4</th>
+<th align="center">5</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">38</td>
+<td align="center">20</td>
+<td align="center">32</td>
+<td align="center">57</td>
+<td align="center">124</td>
+<td align="center">69</td>
+</tr>
+<tr>
+<td align="center">pivot,i</td>
+<td align="center"></td>
+<td align="center">j</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<p>  j 发现 32 比 38 小，于是就不移动了<br>  然后 i 开始移动，发现 20 比 38 小，继续向后移动，发现走到了 j 指向的位置</p>
+<table>
+<thead>
+<tr>
+<th align="center">0</th>
+<th align="center">1</th>
+<th align="center">2</th>
+<th align="center">3</th>
+<th align="center">4</th>
+<th align="center">5</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">38</td>
+<td align="center">20</td>
+<td align="center">32</td>
+<td align="center">57</td>
+<td align="center">124</td>
+<td align="center">69</td>
+</tr>
+<tr>
+<td align="center">pivot</td>
+<td align="center"></td>
+<td align="center">i, j</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<p>  这时候我们又将主元和 i, j 指向的元素交换</p>
+<table>
+<thead>
+<tr>
+<th align="center">0</th>
+<th align="center">1</th>
+<th align="center">2</th>
+<th align="center">3</th>
+<th align="center">4</th>
+<th align="center">5</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">32</td>
+<td align="center">20</td>
+<td align="center">38</td>
+<td align="center">57</td>
+<td align="center">124</td>
+<td align="center">69</td>
+</tr>
+<tr>
+<td align="center">pivot</td>
+<td align="center"></td>
+<td align="center">i, j</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<ol start="5">
+<li>依次类推，后面每一步的结果为</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th align="center">0</th>
+<th align="center">1</th>
+<th align="center">2</th>
+<th align="center">3</th>
+<th align="center">4</th>
+<th align="center">5</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">32</td>
+<td align="center">20</td>
+<td align="center">38</td>
+<td align="center">57</td>
+<td align="center">124</td>
+<td align="center">69</td>
+</tr>
+<tr>
+<td align="center">pivot,i</td>
+<td align="center">j</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th align="center">0</th>
+<th align="center">1</th>
+<th align="center">2</th>
+<th align="center">3</th>
+<th align="center">4</th>
+<th align="center">5</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">32</td>
+<td align="center">20</td>
+<td align="center">38</td>
+<td align="center">57</td>
+<td align="center">124</td>
+<td align="center">69</td>
+</tr>
+<tr>
+<td align="center">pivot</td>
+<td align="center">i, j</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th align="center">0</th>
+<th align="center">1</th>
+<th align="center">2</th>
+<th align="center">3</th>
+<th align="center">4</th>
+<th align="center">5</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">20</td>
+<td align="center">32</td>
+<td align="center">38</td>
+<td align="center">57</td>
+<td align="center">124</td>
+<td align="center">69</td>
+</tr>
+<tr>
+<td align="center">pivot</td>
+<td align="center">i, j</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th align="center">0</th>
+<th align="center">1</th>
+<th align="center">2</th>
+<th align="center">3</th>
+<th align="center">4</th>
+<th align="center">5</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">20</td>
+<td align="center">32</td>
+<td align="center">38</td>
+<td align="center">57</td>
+<td align="center">124</td>
+<td align="center">69</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">pivot,i ,i</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th align="center">0</th>
+<th align="center">1</th>
+<th align="center">2</th>
+<th align="center">3</th>
+<th align="center">4</th>
+<th align="center">5</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">20</td>
+<td align="center">32</td>
+<td align="center">38</td>
+<td align="center">57</td>
+<td align="center">124</td>
+<td align="center">69</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">pivot, i</td>
+<td align="center">j</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th align="center">0</th>
+<th align="center">1</th>
+<th align="center">2</th>
+<th align="center">3</th>
+<th align="center">4</th>
+<th align="center">5</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">20</td>
+<td align="center">32</td>
+<td align="center">38</td>
+<td align="center">57</td>
+<td align="center">124</td>
+<td align="center">69</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">pivot</td>
+<td align="center">i, j</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th align="center">0</th>
+<th align="center">1</th>
+<th align="center">2</th>
+<th align="center">3</th>
+<th align="center">4</th>
+<th align="center">5</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">20</td>
+<td align="center">32</td>
+<td align="center">38</td>
+<td align="center">57</td>
+<td align="center">69</td>
+<td align="center">124</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">pivot</td>
+<td align="center">i, j</td>
+</tr>
+</tbody></table>
+<p>到此为止，我们的排序就算完成了</p>
+<hr>
+<p>下面贴上这个方法的 C 语言代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> LEN 100 <span class="hljs-comment">//定义一个数组的长度</span></span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">quickSort</span><span class="hljs-params">(<span class="hljs-keyword">int</span> *arr,<span class="hljs-keyword">int</span> left,<span class="hljs-keyword">int</span> right)</span></span>&#123;<br>  <span class="hljs-keyword">if</span>(left&gt;=right)<br>    <span class="hljs-keyword">return</span>; <span class="hljs-comment">//这个情况说明 这个片段中没有需要排的数了,所以直接退出</span><br>  <span class="hljs-keyword">int</span> pivot = arr[left];<br>  <span class="hljs-keyword">int</span> i = left;<br>  <span class="hljs-keyword">int</span> j = right;<br>  <span class="hljs-keyword">while</span>(i&lt;j)&#123;<br>    <span class="hljs-keyword">while</span>(i&lt;j&amp;&amp;arr[j]&gt;=pivot)<br>      j--;<span class="hljs-comment">//一直移动 j 直到找到一个比主元小的元素</span><br>    <span class="hljs-keyword">while</span>(i&lt;j&amp;&amp;arr[i]&lt;=pivot)<br>      i++;<span class="hljs-comment">//一直移动 i 直到找到一个比主元大的元素</span><br>    <span class="hljs-keyword">if</span>(i&lt;j)&#123;<br>      arr[i] = arr[i]^arr[j];<br>      arr[j] = arr[i]^arr[j];<br>      arr[i] = arr[i]^arr[j];<br>    &#125;<span class="hljs-comment">//交换i j 指向的元素</span><br>  &#125;<br>  arr[left] = arr[j];<br>  arr[j] = pivot;<br>  <span class="hljs-comment">//如果i和j 相等,while循环便会退出,我们再这里交换 主元 和 i , j 共同指向的元素</span><br>  quickSort(arr,left,j<span class="hljs-number">-1</span>);<span class="hljs-comment">//对左边进行排序</span><br>  quickSort(arr,j+<span class="hljs-number">1</span>,right);<span class="hljs-comment">//对右边进行排序</span><br><br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;<br>  <span class="hljs-keyword">int</span> arr[LEN];<br>  <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>;i&lt;LEN;i++)&#123;<br>    arr[i] =rand()/<span class="hljs-number">100</span>;<br>  &#125;  <span class="hljs-comment">//生成一些随机数,我懒得想数据了</span><br>  quickSort(arr,<span class="hljs-number">0</span>,LEN<span class="hljs-number">-1</span>);<br>  <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>;i&lt;LEN;i++)&#123;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d &quot;</span>,arr[i] );<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>当然啦，懒得写的同学可以直接调用 algorithm 头文件中的 sort（数组起始位置，数组结束位置） 来进行排序</p>
+<div id="paginator"></div></div><div id="post-footer"><hr><a href="/2020/02/10/MacOS%E6%9F%A5%E7%9C%8B%E5%92%8C%E6%9D%80%E6%AD%BB%E8%BF%9B%E7%A8%8B/">← Prev MacOS查看和杀死进程</a><span style="color: #fe2"> | </span><a href="/2019/06/11/Vue%E9%9A%8F%E6%89%8B%E8%AE%B0/">Vue随手记 Next →</a><hr></div><div id="bottom-btn"><a id="to-top" href="#post-title" title="to top">∧</a></div><div id="Valine"></div><script>new Valine({
+ el: '#Valine'
+ , appId: ''
+ , appKey: ''
+ , placeholder: '此条评论委托企鹅物流发送'
+})</script></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><a target="_blank" rel="noopener" href="https://github.com/giorgiopeng" id="avatar"><img src="https://avatars.githubusercontent.com/u/34415646?s=400&amp;u=f92ecb53f2f9fb9a9a5b054d6d56239fc1a80f0f&amp;v=4" alt="Avatar"></a><h1 id="Dr"><a target="_blank" rel="noopener" href="https://github.com/GiorgioPeng"> Dr.Giorgio</a></h1><section id="total"><a id="total-archives" href="/archives"><span class="total-title">Archives Total:</span><span class="total-number">18</span></a><div id="total-tags"><span class="total-title">Tags:</span><span class="total-number">3</span></div><div id="total-categories"><span class="total-title">Categories:</span><span class="total-number">11</span></div></section></div><div id="aside-block"></div><footer><nobr><span class="text-title">©</span><span class="text-content">2016 to 2022</span></nobr><wbr><nobr><span class="text-title">ICP</span><span class="text-content">——无——</span></nobr><wbr><wbr></footer></aside></main><canvas id="canvas-dust"></canvas><script src="/js/arknights.js"></script><script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/10.1.2/highlight.min.js"></script></body></html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>CSS随手记 | Hexo</title><script src="https://cdn.bootcss.com/valine/1.4.4/Valine.min.js"></script><script src="https://cdn.bootcdn.net/ajax/libs/mermaid/8.8.2/mermaid.min.js"></script><script>mermaid.initialize({
+  startOnLoad: true
+  , theme: 'dark'
+});</script><link rel="stylesheet" href="/css/arknights.css"><link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/highlight.js/10.1.2/styles/atom-one-dark-reasonable.min.css"><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><meta name="generator" content="Hexo 5.4.0"></head><body><header><nav><a href="/">Home</a><a href="/archives/">Archives</a></nav></header><main><article><div id="post-bg"><div id="post-title"><h1>CSS随手记</h1><hr></div><div id="post-content"><h1 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h1><blockquote>
+<p>这篇会说什么？基础？不，这里会说一些小技巧或者小应用</p>
+</blockquote>
+<h2 id="重写浏览器默认选择条-type-range-的-input-框）"><a href="#重写浏览器默认选择条-type-range-的-input-框）" class="headerlink" title="重写浏览器默认选择条 (type = range 的 input 框）"></a>重写浏览器默认选择条 (type = range 的 input 框）</h2><blockquote>
+<p>先介绍一下 range 型的 input 吧</p>
+</blockquote>
+<p><strong>常用属性：</strong></p>
+<ul>
+<li>value 设置当前值</li>
+<li>min 设置最小值</li>
+<li>max 设置最大值</li>
+<li>step 设置步长</li>
+</ul>
+<p><strong>默认的选择条样式</strong></p>
+<input type = 'range'>
+
+<p><em>对，没有看错就是这么”丑”</em></p>
+<hr>
+<p><strong>经过重写之后：</strong><br><input type = 'range' id="range" style="
+  position: relative;
+  left: 10%;
+  width: 80%;
+  height: 15px;
+  appearance: none;
+  background: linear-gradient(#bfddf5, #bfddf5) no-repeat, #f2f2f2;
+  outline: none;
+  background-size: 50% 100%;
+" value="50"></p>
+<style type="text/css">
+
+  input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height:25px;
+    width: 25px;
+    background:#a1a2ac;
+    border-radius: 50%;
+    border: solid 1px #a1a2ac;
+  }
+</style>
+
+<p><em>是不是好看了许多？因为缺乏 js 的支持，所以可能暂时填充背景颜色的长度可能不会根据滑块的位置变化</em></p>
+<p><strong>下面是例子的代码</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;range&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;range&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;50&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-tag">input</span><span class="hljs-selector-attr">[type=<span class="hljs-string">&quot;range&quot;</span>]</span> &#123;<br>  <span class="hljs-attribute">position</span>: relative;<br>  <span class="hljs-attribute">left</span>: <span class="hljs-number">10%</span>;<br>  <span class="hljs-attribute">width</span>: <span class="hljs-number">80%</span>;<br>  <span class="hljs-attribute">height</span>: <span class="hljs-number">15px</span>;<br>  -webkit-appearance: none; <span class="hljs-comment">/*清除webkit内核浏览器的默认样式*/</span><br>  <span class="hljs-attribute">background</span>: <span class="hljs-number">#bfddf5</span>, <span class="hljs-number">#f2f2f2</span>; <span class="hljs-comment">/*设置颜色,前面的为选中,后面的为未选中的颜色*/</span><br>  <span class="hljs-attribute">outline</span>: none;<br>  <span class="hljs-attribute">background-size</span>: <span class="hljs-number">50%</span> <span class="hljs-number">100%</span>;<br>&#125;<br><span class="hljs-selector-tag">input</span><span class="hljs-selector-attr">[type=<span class="hljs-string">&quot;range&quot;</span>]</span>::-webkit-slider-thumb &#123;<br>  -webkit-appearance: none; <span class="hljs-comment">/*清除webkit内核浏览器的默认样式*/</span><br>  <span class="hljs-attribute">height</span>: <span class="hljs-number">25px</span>; <span class="hljs-comment">/*设置滑块的高度*/</span><br>  <span class="hljs-attribute">width</span>: <span class="hljs-number">25px</span>; <span class="hljs-comment">/*设置滑块的宽度*/</span><br>  <span class="hljs-attribute">background</span>: <span class="hljs-number">#a1a2ac</span>; <span class="hljs-comment">/*设置滑块的颜色*/</span><br>  <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">50%</span>; <span class="hljs-comment">/*将滑块变为圆形*/</span><br>  <span class="hljs-attribute">border</span>: solid <span class="hljs-number">1px</span> <span class="hljs-number">#a1a2ac</span>; <span class="hljs-comment">/*设置滑块边框*/</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-built_in">window</span>.onload = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;<br>  <span class="hljs-keyword">let</span> range = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&quot;#range&quot;</span>);<br>  range.onchange = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;<br>    range.style.backgroundSize = range.value + <span class="hljs-string">&quot;% 100%&quot;</span>; <span class="hljs-comment">//根据滑块的位置变化有色条的长度</span><br>  &#125;;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<div id="paginator"></div></div><div id="post-footer"><hr><a href="/2018/06/11/XSS/">← Prev XSS</a><span style="color: #fe2"> | </span><a href="/2017/10/11/PS%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0/">PS入门学习 Next →</a><hr></div><div id="bottom-btn"><a id="to-index" href="#post-index" title="index">≡</a><a id="to-top" href="#post-title" title="to top">∧</a></div><div id="Valine"></div><script>new Valine({
+ el: '#Valine'
+ , appId: ''
+ , appKey: ''
+ , placeholder: '此条评论委托企鹅物流发送'
+})</script></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><a target="_blank" rel="noopener" href="https://github.com/giorgiopeng" id="avatar"><img src="https://avatars.githubusercontent.com/u/34415646?s=400&amp;u=f92ecb53f2f9fb9a9a5b054d6d56239fc1a80f0f&amp;v=4" alt="Avatar"></a><h1 id="Dr"><a target="_blank" rel="noopener" href="https://github.com/GiorgioPeng"> Dr.Giorgio</a></h1><section id="total"><a id="total-archives" href="/archives"><span class="total-title">Archives Total:</span><span class="total-number">18</span></a><div id="total-tags"><span class="total-title">Tags:</span><span class="total-number">3</span></div><div id="total-categories"><span class="total-title">Categories:</span><span class="total-number">11</span></div></section></div><div id="aside-block"></div><footer><nobr><span class="text-title">©</span><span class="text-content">2016 to 2022</span></nobr><wbr><nobr><span class="text-title">ICP</span><span class="text-content">——无——</span></nobr><wbr><wbr></footer></aside></main><canvas id="canvas-dust"></canvas><script src="/js/arknights.js"></script><script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/10.1.2/highlight.min.js"></script></body></html>

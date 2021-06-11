@@ -1,0 +1,428 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Python随手记 | Hexo</title><script src="https://cdn.bootcss.com/valine/1.4.4/Valine.min.js"></script><script src="https://cdn.bootcdn.net/ajax/libs/mermaid/8.8.2/mermaid.min.js"></script><script>mermaid.initialize({
+  startOnLoad: true
+  , theme: 'dark'
+});</script><link rel="stylesheet" href="/css/arknights.css"><link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/highlight.js/10.1.2/styles/atom-one-dark-reasonable.min.css"><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><meta name="generator" content="Hexo 5.4.0"></head><body><header><nav><a href="/">Home</a><a href="/archives/">Archives</a></nav></header><main><article><div id="post-bg"><div id="post-title"><h1>Python随手记</h1><hr></div><div id="post-content"><h1 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h1><blockquote>
+<p>这篇文章主要功能暂定为一个通俗易懂的功能字典</p>
+</blockquote>
+<p>:::warning<br>普通的变量声明和简单的语法及循环等这里不再赘述<br>:::</p>
+<h2 id="几个操作"><a href="#几个操作" class="headerlink" title="几个操作"></a>几个操作</h2><ul>
+<li>多变量声明：a,b,c = 1,2,3</li>
+<li>取幂：**  如 2**3 = 8</li>
+<li>取整商：// 如 10//4 = 2</li>
+</ul>
+<hr>
+<h2 id="Python-中常用的数据结构"><a href="#Python-中常用的数据结构" class="headerlink" title="Python 中常用的数据结构"></a>Python 中常用的数据结构</h2><ul>
+<li>元组 ()</li>
+<li>列表 []</li>
+<li>字典 {}</li>
+</ul>
+<p>:::tip<br>两个元组（列表） 可以通过 “+” 操作符连接<br>一个元组（列表） 可以通过 “*“ 操作符复制<br>:::</p>
+<h2 id="切片"><a href="#切片" class="headerlink" title="切片"></a>切片</h2><p>切出一个左闭右开的区间<br>如：”abcdefg”[2:4] 返回的是 “cd”</p>
+<ul>
+<li>[x:] 表示从第 x 个到最后一个</li>
+<li>[:y] 表示从第 0 个到第 y-1 个</li>
+</ul>
+<h2 id="步长"><a href="#步长" class="headerlink" title="步长"></a>步长</h2><p>规定切片之间间隔的变量个数<br>如 “abcdefg”[1:4:2] 返回的是 “bd”<br>解释：[1:4] 切出来的是 “bcde” 从这个结果中第 0 个开始，每隔 1 个取一个</p>
+<h2 id="删除列表-列表元素"><a href="#删除列表-列表元素" class="headerlink" title="删除列表 / 列表元素"></a>删除列表 / 列表元素</h2><p>使用 del 语句</p>
+<ul>
+<li>del list[1] 删除列表中第一个元素</li>
+<li>del list[2:4] 删除列表中第三和第四个元素</li>
+<li>del list 删除这个列表，这个变量没有任何指向了</li>
+</ul>
+<h2 id="列表常用函数"><a href="#列表常用函数" class="headerlink" title="列表常用函数"></a>列表常用函数</h2><ul>
+<li>len() 返回列表长度</li>
+<li>max() 返回列表中最大值</li>
+<li>min() 返回列表中最小值</li>
+<li>sum() 返回列表的和</li>
+<li>sorted() 对一个列表进行排序，返回排序的结果，不改变被排序的列表</li>
+</ul>
+<h2 id="列表常用方法"><a href="#列表常用方法" class="headerlink" title="列表常用方法"></a>列表常用方法</h2><ul>
+<li>.index(value) 求列表中第一次出现值为 value 元素的索引，不存在会报错</li>
+<li>.count(value) 求列表中出现了几次值为 value 的元素</li>
+<li>.remove(value) 移除列表中值为 value 的元素，有多个只会移除第一个，没有该值会报错</li>
+<li>.append(value) 在列表末尾添加一个值为 value 的元素，即使这个元素时一个列表，也会作为一个元素添加进去</li>
+<li>.extend(value) 可以用来添加多个元素，如果 value 是一个列表，则会将这个两个列表拼起来</li>
+<li>.clear() 删除列表中所有元素</li>
+<li>.insert(position,value) 在索引为 Position 的地方插入 value</li>
+<li>.copy() 复制一个列表，仅仅是值传递，不是引用传递</li>
+<li>.sort() 对一个列表进行排序，如果括号内写 reverse=True 则会方向排序，默认对数字从小到大，对字母按照字典顺序排列</li>
+</ul>
+<h2 id="生成器"><a href="#生成器" class="headerlink" title="生成器"></a>生成器</h2><ul>
+<li>range() 生成一个左闭右开的区间，左边的数缺省是 0, 参数间隔和切片不同，使用”,”, 可以设定步长 生成的结果可以强转为列表或者元组</li>
+</ul>
+<h2 id="格式化输出"><a href="#格式化输出" class="headerlink" title="格式化输出"></a>格式化输出</h2><ul>
+<li><p>%i 表示整数</p>
+</li>
+<li><p>%c 表示字符</p>
+</li>
+<li><p>%u 表示无符号整数</p>
+</li>
+<li><p>%o 表示八进制</p>
+</li>
+<li><p>%d 表示十进制</p>
+</li>
+<li><p>%x 表示十六进制</p>
+</li>
+<li><p>%s 表示字符串</p>
+<ul>
+<li>%10s 表示右对齐输出，占位符 10 位（占位符个数可以更改，占位符为空格符）</li>
+<li>%-10s 表示左对齐输出，占位符 10 位</li>
+<li>%.2s 截取字符串起始两位</li>
+</ul>
+</li>
+<li><p>%e 表示科学计数法</p>
+</li>
+<li><p>%g 自动识别，比较简单用浮点数，比较复杂用科学计数法</p>
+</li>
+<li><p>多个参数时，采用 %(str1,str2) 的格式</p>
+<blockquote>
+<p>a = “hello python”<br>print(“%s” % a)<br>输出：hello python</p>
+</blockquote>
+</li>
+<li><p>使用{} 和 .format() format() 参数为一个元组，{}内可以加一个索引，如果没有索引的时候{}的数量必须和元组长度一样，当{}内为一个变量名时，format() 参数为一条赋值语句。</p>
+<blockquote>
+<p>如 print(‘今天如何{}昨天{}’.format(“, 好，”,”. 不好。”))<br>print(“今天{how}”.format(how = ‘好’))</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="字符串常用方法"><a href="#字符串常用方法" class="headerlink" title="字符串常用方法"></a>字符串常用方法</h2><ul>
+<li>.replace(“oldString”,”newString”[,count]) count 表示要替换的个数，返回值为结果字符串，不会改变源字符串</li>
+<li>.split(“symbol”) 用指定符号将字符串切割成列表<br>:::tip<br>如果 split() 中不传入任何参数，则会以空格切割<br>:::<br>:::danger<br>不能使用 split(‘’), 如果想将字符串中每一个字符都变成一个列表中的元素，应该使用 list() 函数强转字符串<br>:::</li>
+<li>‘symbol’.join(list/tuple) 将一个列表或者元组以指定分隔符合并成一个字符串<br>:::tip<br>这里可以使用空字符串进行合并<br>:::</li>
+<li>.startswith(“string”) 检测该字符串是否以默认字符（串）开头，如果是则返回 True, 否则返回 False</li>
+<li>.endswith(“String”) 检测该字符串是否以默认字符（串）结尾，如果是则返回 True, 否则返回 False<br>:::warning<br>这里是 startswith 而不是 startwith<br>:::</li>
+<li>.upper() 返回一个新字符串，该字符串的值为源字符串转化成大写，不会改变源字符串</li>
+<li>.lower() 返回一个新字符串，该字符串的值为源字符串转化成小写，不会改变源字符串</li>
+<li>.swapcase() 返回一个新字符串，该字符串中大写字符为源字符串的小写字符，该字符串的小写字符为源字符串的大写字母，不会改变源字符串</li>
+<li>.capitalize() 返回一个新字符串，新字符串和源字符串的区别为新字符串首字母大写，不会改变原字符串</li>
+<li>.isnumeric() 判断该字符串是否全部由数字构成，如果是则返回 True, 否则返回 False</li>
+<li>.isalpha() 判断该字符串是否全部为字符构成，如果是则返回 True, 否则返回 False</li>
+<li>.isalnum() 判断该字符串是否全部由字符和数字构成，如果是则返回 True, 否则返回 False</li>
+<li>.isspace() 判断该字符串是否全为空格，如果是则返回 True, 否则返回 False</li>
+<li>.isdigit() 判断该字符串是否全为数字，如果是则返回 True, 否则返回 False</li>
+<li>.strip() 去掉源字符串两端的空格并且返回一个新字符串，不会改变源字符串</li>
+<li>.rstrip() 去掉源字符串右侧的空格并且返回一个新字符串，不会改变源字符串</li>
+<li>.lstrip() 去掉源字符串左侧的空格并且返回一个新字符串，不会改变源字符串</li>
+</ul>
+<h2 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h2><p>声明一个字典的常用方式：</p>
+<ul>
+<li><p>直接赋值 如 dic = {‘a’:1,’b’:2}</p>
+</li>
+<li><p>使用 dict()</p>
+<ul>
+<li><p>使用 dict() 转化包含列表的列表：</p>
+<blockquote>
+<p>lst = [[1,2],[2,3],[3,4]]<br>dic = dict(lst)<br>dic : {1: 2, 2: 3, 3: 4}</p>
+</blockquote>
+</li>
+<li><p>使用 dict() 快速赋值：</p>
+<blockquote>
+<p>dic = dict( m = 1,n = 2,h = 3)<br>print(dic)<br>dic:{‘m’:1,’n’:2’,’h’:3}</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>使用 dict.fromkeys(list[,value]) 函数</p>
+<blockquote>
+<p>list 为字典的键名，如果 value 没有指定，那么默认每一个元素的值都为 None</p>
+</blockquote>
+</li>
+</ul>
+<p>:::warning<br>字典的键名必须是不可变对象<br>:::</p>
+<p>字典中常用的方法：</p>
+<ul>
+<li>.get(key) 返回 key 所对应的值<br>:::tip<br>可以直接使用中括号语法访问<br>:::</li>
+<li>.keys() 返回一个视图，其中包含所有 key 值，和 range 生成的结果结构类似</li>
+<li>.values() 返回一个视图，其中包含所有 value 值，和 range 生成的结果结构类似</li>
+<li>.items() 返回一个视图，其中包含所有项目，和 range 生成的结果结构类似</li>
+</ul>
+<hr>
+<h2 id="函数声明"><a href="#函数声明" class="headerlink" title="函数声明"></a>函数声明</h2><ul>
+<li>def function_name（参数列表）:</li>
+<li>默认值：直接在声明参数的时候，赋值即可 如 def a(x,y=10)</li>
+<li>可变参数：使用 “*“ 关键字 如 def a(*x) 这时候会将这个参数变成一个元组</li>
+</ul>
+<h2 id="python-层级概念"><a href="#python-层级概念" class="headerlink" title="python 层级概念"></a>python 层级概念</h2><ul>
+<li>表达式 -&gt; 创建，处理对象</li>
+<li>语句 -&gt; 包含表达式</li>
+<li>逻辑单元 -&gt; 函数或者类，由语句构成</li>
+<li>模块 -&gt; .py 代码文件组成模块</li>
+<li>包 -&gt;定义自己有关系的文件，或者模块（包可以想象成文件夹，模块可以想象成文件夹当中的模块）</li>
+<li>程序 -&gt; 若干个包 + 若干个模块</li>
+</ul>
+<h2 id="导入模块"><a href="#导入模块" class="headerlink" title="导入模块"></a>导入模块</h2><ul>
+<li>import modelname 导入指定模块</li>
+<li>import modelname as simplename 在调用的时候可以简化书写</li>
+<li>from modelname import functionname 导入部分模块（例如仅仅导入几个函数）</li>
+</ul>
+<h2 id="常用模块介绍"><a href="#常用模块介绍" class="headerlink" title="常用模块介绍"></a>常用模块介绍</h2><ul>
+<li>random<ul>
+<li>random.random() 返回一个 0 到 1 之间的随机浮点数</li>
+<li>random.randint(a,b) 返回一个在 [a,b] 区间中的随机整数</li>
+<li>random.choice(list/tuple) 返回指定列表（元组）中的随机一项</li>
+<li>random.sample(list/tuple,numberOfResult) 返回一个指定元素个数的列表，列表中的元素为在指定的列表或者元组中随机选择的</li>
+<li>random.shuffle(list) 将指定列表随机打乱，直接在源列表中操作，没有返回值</li>
+</ul>
+</li>
+<li>time<ul>
+<li>time.sleep(second)  暂停指定秒数（不是毫秒）</li>
+<li>time.ctime() 返回当地时间，为字符串类型 如：’Sun May 19 16:00:58 2019’</li>
+<li>time.localtime() 返回当前时区的时间，为一个视图 wday 0-6 分别表示周一到周天，yday 1-366 分别表示一年中的第几天</li>
+<li>time.strftime(“时间格式”,time.localtime()) 返回当前指定格式的时间，为一个字符串，如 %Y-%m-%d %H:%M:%S 返回  年 - 月 - 日 时：分：秒</li>
+<li>time.time() 返回当前毫秒数</li>
+</ul>
+</li>
+</ul>
+<h2 id="文件读取"><a href="#文件读取" class="headerlink" title="文件读取"></a>文件读取</h2><p>:::tip<br>多多注意文件指针的位置<br>:::</p>
+<ul>
+<li>open(filePath,type[,encoding]) 返回一个类似 C 语言中文件指针的东西<ul>
+<li>filePath（记得转义）<ul>
+<li>绝对路径</li>
+<li>相对路径</li>
+</ul>
+</li>
+<li>type 类型：<ul>
+<li>‘r’ 读取文件，默认</li>
+<li>‘w’ 写入文件</li>
+<li>‘rw’ 读写文件</li>
+<li>‘a’ 追加</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>filePointer.read([number]) 读取文件所有内容，返回一个字符串，如果指定 Number 值，则会读取指定数量的字符</li>
+<li>fielPointer.readline([number]) 读取文件一行，如果指定 number 值的话，则会读取该行的 number 个字符，第二次调用该函数的时候，如果该行没有读完，会继续读</li>
+<li>filePointer.readlines() 读取文件中所有行，返回结果为一个列表，每一行就是列表中的一个元素，每一个元素以换行符结尾</li>
+<li>filePointer.seek(number) 移动文件指针 0 表示起始位置</li>
+<li>filePointer.close() 关闭文件</li>
+<li>filePointer.write(string) 将指定内容写入文件中，记得要关闭文件</li>
+<li>filePointer.writelines(list) 一行一行的写入文件，列表中必须是字符串型的数据，不会换行，直接把列表变成字符串，除非添加换行符</li>
+</ul>
+<h2 id="os-模块"><a href="#os-模块" class="headerlink" title="os 模块"></a>os 模块</h2><blockquote>
+<p>提供了丰富的方法处理文件和目录<br>使用方法：import os</p>
+</blockquote>
+<ul>
+<li>os.name 返回一个包含系统名字的字符串</li>
+<li>os.getcwd() 返回一个字符串，其中包含当前文件绝对路径</li>
+<li>os.listdir() 返回一个列表，其中包含当前文件的所有文件和目录名</li>
+<li>os.chdir(newPath) 改变工作路径为指定工作路径</li>
+<li>os.remove(filename) 删除指定文件</li>
+<li>os.path.split(filePath) 返回一个元组，前者是文件目录，后者是文件名</li>
+<li>os.path.exists(filePath) 返回一个布尔值，判断一个文件是否存在</li>
+</ul>
+<h2 id="pickle-模块"><a href="#pickle-模块" class="headerlink" title="pickle 模块"></a>pickle 模块</h2><blockquote>
+<p>提供了一个简单的持久化功能，可以将对象以文件的形式存放在磁盘中<br>提供了基本数据的序列化和反序列化<br>通过序列化操作可以将程序运行中的对象信息保存在文件中，永久储存<br>通过反序列化操作，可以从文件中创建上一次程序保存的对象</p>
+</blockquote>
+<p>:::warning<br>写入方式不是’w’ 而是 ‘wb’; 读取方式不是’r’ 而是 ‘rb’<br>:::</p>
+<ul>
+<li>pickle.dump(string,filepath) 将数据储存进 .pkl 文件</li>
+<li>pickle.load(filepath) 返回 file 中的数据</li>
+</ul>
+<h2 id="numpy-模块"><a href="#numpy-模块" class="headerlink" title="numpy 模块"></a>numpy 模块</h2><blockquote>
+<p>开源强大的科学计算工具包<br>与列表的直观区别：输出的时候元素之间没有’,’号</p>
+</blockquote>
+<ul>
+<li><p>创建 numpy 数组</p>
+<ul>
+<li>numpy.array(list/range()) 通过一个 list 或者视图返回一个数组</li>
+<li>numpy.arange(number) 直接调用内置方法返回一个数组，和 range 用法类似<br>:::tip<br>对数组直接进行加减乘除操作就相当于对数组中的每一项进行该操作<br>:::</li>
+</ul>
+</li>
+<li><p>数组常用属性：</p>
+<ul>
+<li>.ndim 返回数组的维度</li>
+<li>.shape 返回一个元组，其中包含数组的列数和行数</li>
+<li>.size 返回数组中元素的个数</li>
+<li>.dtype 返回数组中元素的数据类型</li>
+<li>.itemsize 返回数组中元素的字节大小</li>
+<li>.data 返回数组在缓存区中的位置</li>
+</ul>
+</li>
+<li><p>数组常用方法：</p>
+<ul>
+<li>.mean() 返回数组中所有元素取平均值的结果</li>
+<li>.sum() 返回数组中所有元素加起来的值</li>
+<li>.reshape(shape) 返回重置形状之后的数组，不改变原数组，但是不能改变元素个数<br>:::tip<br>这里的 shape 就是一个有序数对，假如说使用 array.reshape(2,5) 就是将这个数组变成一个两行五列的数组<br>:::</li>
+<li>.resize(shape) 直接修改原数组的形状</li>
+<li>.T 返回一个数组的转置，不改变原数组</li>
+<li>.astype(type) 修改数组中元素的类型<ul>
+<li>numpy.int64</li>
+<li>numpy.str</li>
+<li>numpy.float</li>
+<li>numpy.int32</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>数组常用函数：</p>
+<ul>
+<li>numpy.resize(array,shape) 返回一个新数组，为原数组指定形状转化后得到，如果新数组的元素个数比原数组少，则直接删除，如果比原数组多，那么就按照原数组中的数据从小到大的顺序填充到新数组当中</li>
+<li>numpy.linspace（开始的数字大小，结束的数字大小，样本的个数，endpoint=True/False,restep=True/False) 返回在间隔 【开始，停止】 上计算的指定个均匀间隔的样本数组 （是一个闭区间所以会多一个） endpoint 是否包含结束数字大小的值  如果 restep 设置为 true, 会返回一个包含两个元素的元组，其中的第一个元素为数组，第二个元素为步长</li>
+<li>numpy.zeros(shape,dtype) 返回一个指定形状的用 0 填充的数组，默认数据类型为浮点型，可以自定义当中的数据类型（如果定义为字符型的话，数组中的每一个元素都是空字符串）</li>
+<li>numpy.zeros_like(array) 返回一个和另一个数组形状相同的用 0 填充的数组</li>
+<li>numpy.ones() 同上 numpy.zeros()</li>
+<li>numpy.ones_like() 同上 numpy.zeros_like()</li>
+<li>numpy.eye(number) 返回一个方阵，大小为 number 的值，对角线上为 1, 其余位置值为 0</li>
+<li>numpy.random.rand(shape) 返回指定形状的数组，其中每一个元素都是从 0 到 1 随机取值，均匀分布</li>
+<li>numpy.random.normal(size=shape) 返回一个自定形状的正太分布的数组<br>:::tip<br>如果想创建一个 2X3 大小的我们应该写 numpy.random.normal(size=(2,3))<br>:::</li>
+<li>numpy.random.randn(shape) 返回一个指定形状的正太分布数组</li>
+<li>numpy.random.randint(low,high[,size=shape,dtype=]) 返回一个左闭右开的区间上的随机数组，大小可以指定</li>
+<li>numpy.savetxt(filename,arrayname,fmt= 存储类型，delimiter= 分隔符，newline=”\n”,header=””,footer=””,comments=”#”) 将指定数组存入指定文件中</li>
+<li>numpy.loadtxt(filename,delimiter= 分隔符） 返回一个数组</li>
+<li>numpy.save(‘filename.npy’,array) 储存一个数组格式的文件</li>
+<li>numpy.load(filename) 返回一个数组</li>
+<li>numpy.nan 返回 nan</li>
+</ul>
+</li>
+<li><p>布尔数组</p>
+<ul>
+<li>布尔数组可以用来提取数组中想要的元素</li>
+<li>布尔数组可以直接创建，也可以直接用一个已有的数组进行逻辑判断获得 如：<br>arr = [[1 2 3 4]<br>  [2 4 5 9]]<br>arr&gt;5 返回：<br> [False False False False]<br> [False False False True]<br>:::danger<br>这里判断后返回的是一个一维数组，不会保留数组原始结构<br>:::<blockquote>
+<p>如果想要获得 array 中所有大于 5 的值，可以使用 array[[array&gt;5]] 或者 array[array&gt;5]<br>解释：相当于用 array&gt;5 这个布尔数组每一个元素的值来一一对应是否输出 array 数组中的元素</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>多维数组访问</p>
+<ul>
+<li>array<a href="b">a</a>= array[a,b]</li>
+</ul>
+</li>
+</ul>
+<h2 id="pandas-模块"><a href="#pandas-模块" class="headerlink" title="pandas 模块"></a>pandas 模块</h2><h3 id="1-series"><a href="#1-series" class="headerlink" title="1. series"></a>1. series</h3><blockquote>
+<p>series 数据结构：带有标签的一维数组，可以保存任何数据类型，标签统称为索引（索引可以为数字，字符等）</p>
+</blockquote>
+<p>:::danger<br>series 是一个一维数组<br>:::</p>
+<ul>
+<li>series 创建方法<ul>
+<li>由字典创建 pandas.Series(dict)</li>
+<li>由一维数组创建 pandas.Series(array)</li>
+<li>通过标量创建 如 pandas.Series(100,index=range(5)) 创建一个索引为 0 到 4 的五个元素组成的 series, 每一个元素的值都是 100<br>:::tip<br>括号内可选参数：dtype,name,index<br>:::</li>
+</ul>
+</li>
+<li>索引使用：（可以不唯一，但尽量避免）<ul>
+<li>下标索引（不能使用 -1)</li>
+<li>标签索引 当指定索引时，如果使用字符当索引，可以直接通过字符检索，如果想要选出多个值，可以是用 [[]], 如 series[[‘a’,’b’]]</li>
+<li>切片索引 当使用下标切片时，为一个左闭右开的区间，如果使用标签的话，为闭区间，如果标签也是数字的话，默认当做下标做切片（可以使用 -1)</li>
+</ul>
+</li>
+<li>基本技巧<ul>
+<li>数据查看<ul>
+<li>series.head(number) 默认查看最前面五条数据，可以传入 Number 的值，自己指定查看最前面几个数据</li>
+<li>series.tail(number) 默认查看最后面五条数据，可以传入 Number 的值，自己指定查看最后面几个数据</li>
+<li>series.reindex（一些索引） 返回值为一个 series, 返回的 series 中，给定的索引如果在原 series 中存在，则会将原 series 中的对应的索引和值添加到这个 series 中，如果不存在则会给给定索引添加空值并保留在返回的 series 中<br>:::warning<br>reindex 方法并不是改变原 series 的索引<br>reindex 方法有一个可以选参数 fill_value 可以指定给所有不存在的索引添加一个默认值<br>:::</li>
+</ul>
+</li>
+<li>对齐<ul>
+<li>当两个 series 做操作时，比如说做加法运算，会将两个 series 中索引相同的值相加，如果某些索引只在一个 series 中存在，则这些索引的相加结果为 0</li>
+</ul>
+</li>
+<li>添加，修改，删除<ul>
+<li>删除<ul>
+<li>series.drop(index) 返回值为一个 series, 不会改变原 series, 新的 series 不包含被删除的项，如果需要删除多项，那么则需要传入一个索引列表</li>
+</ul>
+</li>
+<li>添加<ul>
+<li>直接通过标签 / 索引添加值 如 b[20] = 10</li>
+<li>series.append(series) 返回一个新的 series, 添加一个 series 到指定 series 末端，但不会改变原 series</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>两个方法<ul>
+<li>series.isnull() 返回一个布尔 series, 空值对应 true</li>
+<li>series.notnull() 返回一个布尔 series, 空置对应 false</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-DataFrame"><a href="#2-DataFrame" class="headerlink" title="2. DataFrame"></a>2. DataFrame</h3><blockquote>
+<p>DataFrame: 二维数组，一个表格型的数据结构，包含一组有序的列，其列的值类型可以是数值，字符串，布尔值等，DataFrame 中的数据以一个或多个二维块存放，不是列表，字典或者一维数组结构<br>例子：<br>data = {‘name’:[‘Jack’,’Tom’,’Mary’],<br>       ‘age’:[18,19,20],<br>       ‘gender’:[‘m’,’m’,’w’]}<br>frame = pandas.DataFrame(data)</p>
+</blockquote>
+<p>:::tip<br>  DataFrame 有三个部分 index（行标签） columns（列标签） value（值） 有点类似 excel<br>:::</p>
+<ul>
+<li>创建方法：pandas.DataFrame(?)<ul>
+<li>由数组 / 列表组成的字典<br>这种方法创建的 dataframe  columns 为字典的 key, index 为默认数字标签，如果要指定 index, 可以加入可选参数<br>index = list index 的个数必须和原数据段数量相互匹配<br>和<br>columns = list columns 可以重新指定列的顺序，也可以增加或者减少列的数量，如果添加的 List 中有列名不存在于原列名中，会创建空值<br>:::tip<br>  字典的值的长度必须保持一致<br>:::</li>
+<li>由 series 组成的字典<br>这种方法创建的 dataframe, columns 为字典的 key,index 为 series 的标签（如果 series 没有指定标签，则是默认的数字标签）<br>series 的长度可以不一样，生成的 dataframe 会出现 nan 值</li>
+<li>由二维数组直接创建<br>index 和 columns 的长度必须和数组形状一致，如果不指定 index 和 columns, 两者均为默认样式</li>
+<li>由字典组成的列表<br>如果字典中的字段的值长度不一致，会添加空值用来对齐<br>每一个字典代表一行数据<br>columns 为字典的 Key index 不做指定则为默认的数组标签</li>
+<li>由字典组成的字典<br>该方法创建的 dataframe, columns 为字典的 Key index 为子字典的 key<br>创建方法中的可选参数与上面几种创建方法不同，不能改变原有的 index, 如果指向新的标签，值为空值，有点像 series.reindex()</li>
+</ul>
+</li>
+<li>选择方法：<ul>
+<li>选择列：<br>  直接使用方括号语法 如 DataFrame[‘column1’]<br>  如果要选择多列，和多维数组选择元素方法类似，如 DataFrame[[‘column1’,’column2’]]</li>
+</ul>
+</li>
+<li>选择行：<ul>
+<li>DataFrame.loc[‘row1’] 使用 loc 方法传入参数 ‘行名’ 多行选择和多列选择方法一样<br>:::tip<br>选择一行或者一列的时候返回的是一个 series, 选择多行或者多列的时候放回一个 DataFrame<br>:::</li>
+<li>DataFrame【一个切片】 方括号内直接使用切片会选择行，左闭右开<br>:::warning<br>使用切片选择的时候就算只选择一行也是一个 DataFrame<br>:::</li>
+<li>DataFrame.loc【一个切片】 这种切片方式是一个闭区间，末端包含</li>
+<li>DataFrame.iloc【第几行】  传入行号（注意这里不是传入行的索引） -1 表示最后一行，可以使用切片 选择多行使用 DataFrame.iloc[[]]</li>
+</ul>
+</li>
+<li>布尔索引：<ul>
+<li>单行 / 列  做判断的时候只保留所有为 True 的行，为 False 的行不会选出来</li>
+<li>多行 / 列  做判断的时候保留所有行，但是为 True 的元素会显示其数值，为 False 的元素会显示 NaN</li>
+</ul>
+</li>
+<li>基本技巧<ul>
+<li>DataFrame.head() 查看前 N 行数据，默认查看最前面五条数据</li>
+<li>DataFrame.tail() 查看后 N 行数据，默认查看最后面五条数据</li>
+<li>DataFrame.T 转置，行列值和标签都互换</li>
+<li>添加：<ul>
+<li>直接使用中括号语法添加（行使用 .loc 等方法）</li>
+</ul>
+</li>
+<li>修改：<ul>
+<li>直接使用中括号语法修改（行使用 .loc 等方法）<br>:::tip<br>可以直接操作多个<br>:::</li>
+</ul>
+</li>
+<li>删除：<ul>
+<li>使用 drop(n) : 默认删除第 n 行，如果需要删除列 则需要添加参数 axis=1<br>:::tip<br>使用额外参数 inplace = False 表示生成新的 DataFrame, 而不是直接改变源 DataFrame 的数据<br>:::</li>
+<li>del 语句 : 使用中括号语法，默认删除列</li>
+</ul>
+</li>
+<li>对齐：<ul>
+<li>同 Series</li>
+</ul>
+</li>
+<li>排序（也适用于 Series)<ul>
+<li>按值排序 sort_values【列标签名】 额外参数 ascending=True 表示升序排序  ascending=False 表示降序排序  默认升序</li>
+<li>按索引排序 sort_index() ascending 和上面的用法意义相同 索引时数组安大小排序，索引时字符按字典书序排序<br>:::tip<br>可以多列排序，例如 DataFrame.sort_values([‘a’,’c’]) 先将 a 列的值排完，然后针对 a 列中值相同情况根据 c 列排序（但是不会改变 a 列的顺序）, 如果 a 全部都不一样，就不用考虑 c 了<br>:::</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="datetime-模块"><a href="#datetime-模块" class="headerlink" title="datetime 模块"></a>datetime 模块</h2><ul>
+<li><p>获取当前时间 datetime.date.today() 返回的数据格式是一个 datetime.date 可以强转成字符串</p>
+<blockquote>
+<p>返回的格式不是一个字符串的意义：返回一个特殊的对象我们可以在其中添加很多的自定义方法，能够更加方便的使用这个字符串</p>
+</blockquote>
+</li>
+<li><p>生成一个 datetime.date 对象：datetime.date(year.month,day)</p>
+</li>
+<li><p>获得当前时间（最小单位为毫秒） datetime.datetime.now() 返回的数据格式为 datetime.datetime</p>
+</li>
+<li><p>生成一个时间戳：datetime.datetime（年，月，日，时，分，秒） 可以用来做加减法</p>
+</li>
+<li><p>时间差 (datetime.timedelta) 可以由两个时间戳做计算得到，默认时间差的单位是天，可以和一个时间戳做计算</p>
+<ul>
+<li>生成一个时间差：datetime.timedelta（天，秒）<br>:::tip<br>将一个字符串转化成一个时间 from dateutil.parser import parse<br>使用 parse（字符串） 方法，会将指定字符串转化成一个可读的时间（不支持中文） 支持 / - 空格 英文<br>:::</li>
+</ul>
+</li>
+</ul>
+<h2 id="数值计算和统计"><a href="#数值计算和统计" class="headerlink" title="数值计算和统计"></a>数值计算和统计</h2><div id="paginator"></div></div><div id="post-footer"><hr><a href="/2019/04/11/%E8%BF%9E%E7%BB%AD%E8%87%AA%E7%84%B6%E6%95%B0%E4%B9%8B%E5%92%8C/">← Prev 连续自然数之和</a><span style="color: #fe2"> | </span><a href="/2018/09/11/Grid%E5%B8%83%E5%B1%80/">Grid布局 Next →</a><hr></div><div id="bottom-btn"><a id="to-index" href="#post-index" title="index">≡</a><a id="to-top" href="#post-title" title="to top">∧</a></div><div id="Valine"></div><script>new Valine({
+ el: '#Valine'
+ , appId: ''
+ , appKey: ''
+ , placeholder: '此条评论委托企鹅物流发送'
+})</script></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><a target="_blank" rel="noopener" href="https://github.com/giorgiopeng" id="avatar"><img src="https://avatars.githubusercontent.com/u/34415646?s=400&amp;u=f92ecb53f2f9fb9a9a5b054d6d56239fc1a80f0f&amp;v=4" alt="Avatar"></a><h1 id="Dr"><a target="_blank" rel="noopener" href="https://github.com/GiorgioPeng"> Dr.Giorgio</a></h1><section id="total"><a id="total-archives" href="/archives"><span class="total-title">Archives Total:</span><span class="total-number">18</span></a><div id="total-tags"><span class="total-title">Tags:</span><span class="total-number">3</span></div><div id="total-categories"><span class="total-title">Categories:</span><span class="total-number">11</span></div></section></div><div id="aside-block"></div><footer><nobr><span class="text-title">©</span><span class="text-content">2016 to 2022</span></nobr><wbr><nobr><span class="text-title">ICP</span><span class="text-content">——无——</span></nobr><wbr><wbr></footer></aside></main><canvas id="canvas-dust"></canvas><script src="/js/arknights.js"></script><script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/10.1.2/highlight.min.js"></script></body></html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Grid布局 | Hexo</title><script src="https://cdn.bootcss.com/valine/1.4.4/Valine.min.js"></script><script src="https://cdn.bootcdn.net/ajax/libs/mermaid/8.8.2/mermaid.min.js"></script><script>mermaid.initialize({
+  startOnLoad: true
+  , theme: 'dark'
+});</script><link rel="stylesheet" href="/css/arknights.css"><link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/highlight.js/10.1.2/styles/atom-one-dark-reasonable.min.css"><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><meta name="generator" content="Hexo 5.4.0"></head><body><header><nav><a href="/">Home</a><a href="/archives/">Archives</a></nav></header><main><article><div id="post-bg"><div id="post-title"><h1>Grid布局</h1><hr></div><div id="post-content"><h1 id="Grid-布局"><a href="#Grid-布局" class="headerlink" title="Grid 布局"></a>Grid 布局</h1><blockquote>
+<p>最强大，最复杂的布局，也是刚出来没多久的布局<br>将容器划分成”行”和”列”，产生单元格，然后指定”项目所在”的单元格，可以看作是二维布局</p>
+</blockquote>
+<hr>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>容器 (container): 最外层元素<br> 项目 (item): 容器的直接子元素，不能使容器子元素的子元素</p>
+<p>:::tip<br>注意：grid 布局规定的样式只对项目生效<br>:::<br>网格线包含最两端，所以网格线的数量是网格加 1</p>
+<h4 id="例子："><a href="#例子：" class="headerlink" title="例子："></a>例子：</h4><div class="grid" style="display:grid;grid-template-columns:33% 33% 33%;grid-template-rows:200px 50px">
+  <div style="border:2px solid black;line-height:200px;text-align:center;background-color:white">实例</div>
+  <div style="border:2px solid black;line-height:200px;text-align:center;background-color:red">1</div>
+  <div style="border:2px solid black;line-height:200px;text-align:center;background-color:green">2</div>
+  <div style="border:2px solid black;line-height:50px;text-align:center;background-color:yellow">3</div>
+  <div style="border:2px solid black;line-height:50px;text-align:center;background-color:orange">4</div>
+  <div style="border:2px solid black;line-height:50px;text-align:center;background-color:skyblue">5</div>
+</div>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;grid&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">div</span></span><br><span class="hljs-tag">    <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;</span></span><br><span class="hljs-string"><span class="hljs-tag">    border:2px solid black;</span></span><br><span class="hljs-string"><span class="hljs-tag">    line-height:200px;</span></span><br><span class="hljs-string"><span class="hljs-tag">    text-align:center;</span></span><br><span class="hljs-string"><span class="hljs-tag">    background-color:white</span></span><br><span class="hljs-string"><span class="hljs-tag">  &quot;</span></span><br><span class="hljs-tag">  &gt;</span><br>    实例<br>  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">div</span></span><br><span class="hljs-tag">    <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;</span></span><br><span class="hljs-string"><span class="hljs-tag">    border:2px solid black;</span></span><br><span class="hljs-string"><span class="hljs-tag">    line-height:200px;</span></span><br><span class="hljs-string"><span class="hljs-tag">    text-align:center;</span></span><br><span class="hljs-string"><span class="hljs-tag">    background-color:red</span></span><br><span class="hljs-string"><span class="hljs-tag">  &quot;</span></span><br><span class="hljs-tag">  &gt;</span><br>    1<br>  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">div</span></span><br><span class="hljs-tag">    <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;</span></span><br><span class="hljs-string"><span class="hljs-tag">    border:2px solid black;</span></span><br><span class="hljs-string"><span class="hljs-tag">    line-height:200px;</span></span><br><span class="hljs-string"><span class="hljs-tag">    text-align:center;</span></span><br><span class="hljs-string"><span class="hljs-tag">    background-color:green</span></span><br><span class="hljs-string"><span class="hljs-tag">  &quot;</span></span><br><span class="hljs-tag">  &gt;</span><br>    2<br>  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">div</span></span><br><span class="hljs-tag">    <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;</span></span><br><span class="hljs-string"><span class="hljs-tag">    border:2px solid black;</span></span><br><span class="hljs-string"><span class="hljs-tag">    line-height:50px;</span></span><br><span class="hljs-string"><span class="hljs-tag">    text-align:center;</span></span><br><span class="hljs-string"><span class="hljs-tag">    background-color:yellow</span></span><br><span class="hljs-string"><span class="hljs-tag">  &quot;</span></span><br><span class="hljs-tag">  &gt;</span><br>    3<br>  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">div</span></span><br><span class="hljs-tag">    <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;</span></span><br><span class="hljs-string"><span class="hljs-tag">    border:2px solid black;</span></span><br><span class="hljs-string"><span class="hljs-tag">    line-height:50px;</span></span><br><span class="hljs-string"><span class="hljs-tag">    text-align:center;</span></span><br><span class="hljs-string"><span class="hljs-tag">    background-color:orange</span></span><br><span class="hljs-string"><span class="hljs-tag">  &quot;</span></span><br><span class="hljs-tag">  &gt;</span><br>    4<br>  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">div</span></span><br><span class="hljs-tag">    <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;</span></span><br><span class="hljs-string"><span class="hljs-tag">    border:2px solid black;</span></span><br><span class="hljs-string"><span class="hljs-tag">    line-height:50px;</span></span><br><span class="hljs-string"><span class="hljs-tag">    text-align:center;</span></span><br><span class="hljs-string"><span class="hljs-tag">    background-color:skyblue</span></span><br><span class="hljs-string"><span class="hljs-tag">  &quot;</span></span><br><span class="hljs-tag">  &gt;</span><br>    5<br>  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-class">.grid</span> &#123;<br>  <span class="hljs-attribute">display</span>: grid;<br>  grid-template-<span class="hljs-attribute">columns</span>: <span class="hljs-number">33%</span> <span class="hljs-number">33%</span> <span class="hljs-number">33%</span>;<br>  grid-template-rows: <span class="hljs-number">200px</span> <span class="hljs-number">50px</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="配置在容器上的属性"><a href="#配置在容器上的属性" class="headerlink" title="配置在容器上的属性"></a>配置在容器上的属性</h2><ul>
+<li>设置行 / 列的两个属性：<ul>
+<li>grid-template-columns: 设置每一列的大小，每两个列之间用空格隔开，有几个列写几个</li>
+<li>grid-template-row: 设置每一行的大小，每两个行之间用空格隔开，有几个行写几个</li>
+</ul>
+</li>
+</ul>
+<p>:::warning<br>注意：如果使用相对单位如 % 并且没有给容器规定大小，则是以容器的父容器计算<br>:::</p>
+<ul>
+<li><p>简化书写的小技巧：</p>
+<ul>
+<li>repeat（重复的次数，重复的值）<br> 如：grid-template-columns: 200px 200px 200px<br> 可以简写成 grid-template-columns:repeat(3,200px)<br> grid-template-columns:200px 100px 200px 100px 200px 100px<br> 可以简写成 grid-template-columns:repeat(3,200px 100px)</li>
+</ul>
+</li>
+<li><p>自动数量填充：</p>
+<ul>
+<li>auto-fill: 自动填充项目个数<br> 如：repeat(auto-fill,200px): 创建 n 个（尽可能多）, 直到行（列）装不下或者项目显示完全为止</li>
+</ul>
+</li>
+<li><p>相对单位：</p>
+<ul>
+<li>fr: 用容器总宽（高）减去绝对单位之后，分成 N（所有 fr 个数加起来）份，再按照每个项目的 fr 值分配大小<br>如：grid-template-columns: 1fr 2fr 将容器宽度均分成三份，第一个项目占一份 (33.3%), 第二个项目占两份 (66.6%)<br> grid-template-columns: 100px 1fr 4fr 将容器总宽度减去 100px 之后均分成五份，第二个项目占一份，第三个项目占四份</li>
+</ul>
+</li>
+<li><p>自适应调节大小：</p>
+<ul>
+<li>minmax（最小值，最大值）: 产生一个长度范围，表示长度就在这个范围之中自动执行<br>如：grid-template-columns: 100px minmax(200px,300px) 第二个项目宽度默认是尽可能的接近最大值</li>
+</ul>
+</li>
+<li><p>自动大小</p>
+<ul>
+<li>auto: 由浏览器自己决定，如果设置给宽 (columns) 时尽可能的宽，如果设置给高 (row) 时，与元素高度相匹配</li>
+</ul>
+</li>
+<li><p>行 / 列间距：</p>
+<ul>
+<li>grid-row-gap: 设置行与行之间的间距</li>
+<li>grid-column-gap: 设置列与列之间的间距</li>
+<li>grid-gap: 简写</li>
+</ul>
+</li>
+<li><p>填充方式：</p>
+<ul>
+<li>grid-auto-flow: 有以下四个值 - row 从行开始 - column 从列开始 - row dense 从行开始，尽可能满（见缝大小够就插） - column dense 从列开始，尽可能满（见缝大小够就插）<br>:::tip<br>此处应有例子，下面几个例子是用来展示填充方式的<br>:::</li>
+</ul>
+</li>
+</ul>
+<p><strong>grid-auto-flow:row</strong></p>
+<div style="grid-auto-flow:row;width:300px;height:300px;display:grid;grid-template-columns:repeat(3,100px);grid-template-rows:repeat(3,100px);grid-gap:5px 5px;margin-bottom:100px">
+  <div style="background-color:red;text-align:center;line-height:50px">1</div>
+  <div style="background-color:orange;text-align:center;line-height:50px">2</div>
+  <div style="background-color:grey;text-align:center;line-height:50px">3</div>
+  <div style="background-color:gold;text-align:center;line-height:50px">4</div>
+  <div style="background-color:yellow;text-align:center;line-height:50px">5</div>
+  <div style="background-color:green;text-align:center;line-height:50px">6</div>
+  <div style="background-color:skyblue;text-align:center;line-height:50px">7</div>
+  <div style="background-color:darkred;text-align:center;line-height:50px">8</div>
+  <div style="background-color:pink;text-align:center;line-height:50px">9</div>
+</div>
+
+<hr>
+<p><strong>grid-auto-flow:column</strong></p>
+<div style="grid-auto-flow:column;width:300px;height:300px;display:grid;grid-template-columns:repeat(3,100px);grid-template-rows:repeat(3,100px);grid-gap:5px 5px;margin-bottom:100px">
+  <div style="background-color:red;text-align:center;line-height:50px">1</div>
+  <div style="background-color:orange;text-align:center;line-height:50px">2</div>
+  <div style="background-color:grey;text-align:center;line-height:50px">3</div>
+  <div style="background-color:gold;text-align:center;line-height:50px">4</div>
+  <div style="background-color:yellow;text-align:center;line-height:50px">5</div>
+  <div style="background-color:green;text-align:center;line-height:50px">6</div>
+  <div style="background-color:skyblue;text-align:center;line-height:50px">7</div>
+  <div style="background-color:darkred;text-align:center;line-height:50px">8</div>
+  <div style="background-color:pink;text-align:center;line-height:50px">9</div>
+</div>
+
+<hr>
+<p><strong>grid-auto-flow:row</strong></p>
+<div style="grid-auto-flow:row;width:300px;height:300px;display:grid;grid-template-columns:repeat(3,100px);grid-template-rows:repeat(3,100px);grid-gap:5px 5px;margin-bottom:100px">
+  <div style="grid-column-start: 1;grid-column-end: 3;background-color:red;text-align:center;line-height:50px">1</div>
+  <div style="grid-column-start: 1;grid-column-end: 3;background-color:orange;text-align:center;line-height:50px">2</div>
+  <div style="background-color:grey;text-align:center;line-height:50px">3</div>
+  <div style="background-color:gold;text-align:center;line-height:50px">4</div>
+  <div style="background-color:yellow;text-align:center;line-height:50px">5</div>
+  <div style="background-color:green;text-align:center;line-height:50px">6</div>
+  <div style="background-color:skyblue;text-align:center;line-height:50px">7</div>
+  <div style="background-color:darkred;text-align:center;line-height:50px">8</div>
+  <div style="background-color:pink;text-align:center;line-height:50px">9</div>
+</div>
+
+<hr>
+<p><strong>grid-auto-flow:row dense</strong></p>
+<div style="grid-auto-flow:row dense;width:300px;height:300px;display:grid;grid-template-columns:repeat(3,100px);grid-template-rows:repeat(3,100px);grid-gap:5px 5px;margin-bottom:100px">
+  <div style="grid-column-start: 1;grid-column-end: 3;background-color:red;text-align:center;line-height:50px">1</div>
+  <div style="grid-column-start: 1;grid-column-end: 3;background-color:orange;text-align:center;line-height:50px">2</div>
+  <div style="background-color:grey;text-align:center;line-height:50px">3</div>
+  <div style="background-color:gold;text-align:center;line-height:50px">4</div>
+  <div style="background-color:yellow;text-align:center;line-height:50px">5</div>
+  <div style="background-color:green;text-align:center;line-height:50px">6</div>
+  <div style="background-color:skyblue;text-align:center;line-height:50px">7</div>
+  <div style="background-color:darkred;text-align:center;line-height:50px">8</div>
+  <div style="background-color:pink;text-align:center;line-height:50px">9</div>
+</div>
+
+<hr>
+<p><strong>grid-auto-flow:column</strong></p>
+<div style="grid-auto-flow:column;width:300px;height:300px;display:grid;grid-template-columns:repeat(3,100px);grid-template-rows:repeat(3,100px);grid-gap:5px 5px;margin-bottom:100px">
+  <div style="grid-column-start: 1;grid-column-end: 3;background-color:red;text-align:center;line-height:50px">1</div>
+  <div style="grid-column-start: 1;grid-column-end: 3;background-color:orange;text-align:center;line-height:50px">2</div>
+  <div style="background-color:grey;text-align:center;line-height:50px">3</div>
+  <div style="background-color:gold;text-align:center;line-height:50px">4</div>
+  <div style="background-color:yellow;text-align:center;line-height:50px">5</div>
+  <div style="background-color:green;text-align:center;line-height:50px">6</div>
+  <div style="background-color:skyblue;text-align:center;line-height:50px">7</div>
+  <div style="background-color:darkred;text-align:center;line-height:50px">8</div>
+  <div style="background-color:pink;text-align:center;line-height:50px">9</div>
+</div>
+
+<hr>
+<p><strong>grid-auto-flow:column dense</strong></p>
+<div style="
+  grid-auto-flow:column dense;
+  width:300px;
+  height:300px;
+  display:grid;
+  grid-template-columns:repeat(3,100px);
+  grid-template-rows:repeat(3,100px);
+  grid-gap:5px 5px;
+  margin-bottom:100px
+">
+  <div style="grid-column-start: 1;grid-column-end: 3;background-color:red;text-align:center;line-height:50px">1</div>
+  <div style="grid-column-start: 1;grid-column-end: 3;background-color:orange;text-align:center;line-height:50px">2</div>
+  <div style="background-color:grey;text-align:center;line-height:50px">3</div>
+  <div style="background-color:gold;text-align:center;line-height:50px">4</div>
+  <div style="background-color:yellow;text-align:center;line-height:50px">5</div>
+  <div style="background-color:green;text-align:center;line-height:50px">6</div>
+  <div style="background-color:skyblue;text-align:center;line-height:50px">7</div>
+  <div style="background-color:darkred;text-align:center;line-height:50px">8</div>
+  <div style="background-color:pink;text-align:center;line-height:50px">9</div>
+</div>
+
+<hr>
+<ul>
+<li>指定单元格内容的位置：<ul>
+<li>justify-items:start | end | center | stretch<br>设置单元格中内容的水平位置</li>
+<li>align-items:start | end | center | stretch<br>设置单元格中内容的垂直位置</li>
+<li>place-items:<br>简写</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>设置所有内容的位置：</p>
+<ul>
+<li>justify-content:start | end | center | stretch | space-around | space-between | space-evenly<br>设置整个内容区域的水平位置</li>
+<li>align-content:start | end | center | stretch | space-around | space-between | space-evenly<br>设置整个内容区域的垂直位置</li>
+<li>place-content:<br>简写</li>
+</ul>
+</li>
+<li><p>设置自动补充的网格大小：</p>
+<ul>
+<li>grid-auto-columns<br>自动补充列的宽度</li>
+<li>grid-auto-rows<br>自动补充行的高度</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="配置在项目上的属性"><a href="#配置在项目上的属性" class="headerlink" title="配置在项目上的属性"></a>配置在项目上的属性</h2><ul>
+<li>指定单元格所在位置：<ul>
+<li>grid-column-start<br>起始列</li>
+<li>grid-column-end<br>结束列</li>
+<li>grid-row-start<br>起始行</li>
+<li>grid-row-end<br>结束行</li>
+</ul>
+</li>
+</ul>
+<p>:::tip<br>下面的例子展示的是单元格位置设置<br>:::</p>
+  <div style="
+      width: 300px;
+      height: 300px;
+      display: grid;
+      grid-template-columns: repeat(3,100px);
+      grid-template-rows: repeat(3,100px);
+      grid-auto-columns: 100px;
+      grid-auto-rows: 100px;
+      margin-bottom: 200px;
+  ">
+      <div style="grid-column-start:1;grid-column-end:3;background-color:red;font-weight:bold;text-align:center;">1</div>
+      <div style="background-color:green;font-weight:bold;text-align:center;">2</div>
+      <div style="background-color:grey;font-weight:bold;text-align:center;">3</div>
+      <div style="background-color:skyblue;font-weight:bold;text-align:center;">4</div>
+      <div style="background-color:gold;font-weight:bold;text-align:center;">5</div>
+      <div style="background-color:pink;font-weight:bold;text-align:center;">6</div>
+      <div style="background-color:orange;font-weight:bold;text-align:center;">7</div>
+      <div style="background-color:darkred;font-weight:bold;text-align:center;">8</div>
+      <div style="background-color:yellow;font-weight:bold;text-align:center;">9</div>
+  </div>
+
+<blockquote>
+<blockquote>
+<p>因为第一个块占据了两格，因此下面多出一格</p>
+</blockquote>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span></span><br><span class="hljs-tag">  <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;</span></span><br><span class="hljs-string"><span class="hljs-tag">    width: 300px;</span></span><br><span class="hljs-string"><span class="hljs-tag">    height: 300px;</span></span><br><span class="hljs-string"><span class="hljs-tag">    display: grid;</span></span><br><span class="hljs-string"><span class="hljs-tag">    grid-template-columns: repeat(3,100px);</span></span><br><span class="hljs-string"><span class="hljs-tag">    grid-template-rows: repeat(3,100px);</span></span><br><span class="hljs-string"><span class="hljs-tag">    grid-auto-columns: 100px;</span></span><br><span class="hljs-string"><span class="hljs-tag">    grid-auto-rows: 100px;</span></span><br><span class="hljs-string"><span class="hljs-tag">    margin-bottom: 200px;</span></span><br><span class="hljs-string"><span class="hljs-tag">&quot;</span></span><br><span class="hljs-tag">&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">div</span></span><br><span class="hljs-tag">    <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;</span></span><br><span class="hljs-string"><span class="hljs-tag">      grid-column-start:1;</span></span><br><span class="hljs-string"><span class="hljs-tag">      grid-column-end:3;</span></span><br><span class="hljs-string"><span class="hljs-tag">      background-color:red;</span></span><br><span class="hljs-string"><span class="hljs-tag">      font-weight:bold;</span></span><br><span class="hljs-string"><span class="hljs-tag">      text-align:center;</span></span><br><span class="hljs-string"><span class="hljs-tag">    &quot;</span></span><br><span class="hljs-tag">  &gt;</span><br>    1<br>  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">div</span></span><br><span class="hljs-tag">    <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;</span></span><br><span class="hljs-string"><span class="hljs-tag">      background-color:green;</span></span><br><span class="hljs-string"><span class="hljs-tag">      font-weight:bold;</span></span><br><span class="hljs-string"><span class="hljs-tag">      text-align:center;</span></span><br><span class="hljs-string"><span class="hljs-tag">    &quot;</span></span><br><span class="hljs-tag">  &gt;</span><br>    2<br>  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">div</span></span><br><span class="hljs-tag">    <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;</span></span><br><span class="hljs-string"><span class="hljs-tag">      background-color:grey;</span></span><br><span class="hljs-string"><span class="hljs-tag">      font-weight:bold;</span></span><br><span class="hljs-string"><span class="hljs-tag">      text-align:center;</span></span><br><span class="hljs-string"><span class="hljs-tag">    &quot;</span></span><br><span class="hljs-tag">  &gt;</span><br>    3<br>  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">div</span></span><br><span class="hljs-tag">    <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;</span></span><br><span class="hljs-string"><span class="hljs-tag">      background-color:skyblue;</span></span><br><span class="hljs-string"><span class="hljs-tag">      font-weight:bold;</span></span><br><span class="hljs-string"><span class="hljs-tag">      text-align:center;</span></span><br><span class="hljs-string"><span class="hljs-tag">    &quot;</span></span><br><span class="hljs-tag">  &gt;</span><br>    4<br>  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">div</span></span><br><span class="hljs-tag">    <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;</span></span><br><span class="hljs-string"><span class="hljs-tag">      background-color:gold;</span></span><br><span class="hljs-string"><span class="hljs-tag">      font-weight:bold;</span></span><br><span class="hljs-string"><span class="hljs-tag">      text-align:center;</span></span><br><span class="hljs-string"><span class="hljs-tag">    &quot;</span></span><br><span class="hljs-tag">  &gt;</span><br>    5<br>  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">div</span></span><br><span class="hljs-tag">    <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;</span></span><br><span class="hljs-string"><span class="hljs-tag">      background-color:pink;</span></span><br><span class="hljs-string"><span class="hljs-tag">      font-weight:bold;</span></span><br><span class="hljs-string"><span class="hljs-tag">      text-align:center;</span></span><br><span class="hljs-string"><span class="hljs-tag">    &quot;</span></span><br><span class="hljs-tag">  &gt;</span><br>    6<br>  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">div</span></span><br><span class="hljs-tag">    <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;</span></span><br><span class="hljs-string"><span class="hljs-tag">      background-color:orange;</span></span><br><span class="hljs-string"><span class="hljs-tag">      font-weight:bold;</span></span><br><span class="hljs-string"><span class="hljs-tag">      text-align:center;</span></span><br><span class="hljs-string"><span class="hljs-tag">    &quot;</span></span><br><span class="hljs-tag">  &gt;</span><br>    7<br>  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">div</span></span><br><span class="hljs-tag">    <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;</span></span><br><span class="hljs-string"><span class="hljs-tag">      background-color:darkred;</span></span><br><span class="hljs-string"><span class="hljs-tag">      font-weight:bold;</span></span><br><span class="hljs-string"><span class="hljs-tag">      text-align:center;</span></span><br><span class="hljs-string"><span class="hljs-tag">    &quot;</span></span><br><span class="hljs-tag">  &gt;</span><br>    8<br>  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">div</span></span><br><span class="hljs-tag">    <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;</span></span><br><span class="hljs-string"><span class="hljs-tag">      background-color:yellow;</span></span><br><span class="hljs-string"><span class="hljs-tag">      font-weight:bold;</span></span><br><span class="hljs-string"><span class="hljs-tag">      text-align:center;</span></span><br><span class="hljs-string"><span class="hljs-tag">    &quot;</span></span><br><span class="hljs-tag">  &gt;</span><br>    9<br>  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>设置自身在单元格中的位置<ul>
+<li>justify-self:start | end | center | stretch<br>规定自身在单元格内容中的水平位置</li>
+<li>align-self: start | end | center | stretch<br>规定自身在单元格内容中的垂直位置</li>
+<li>place-self:<br>简写</li>
+</ul>
+</li>
+</ul>
+<div id="paginator"></div></div><div id="post-footer"><hr><a href="/2019/03/11/Python%E9%9A%8F%E6%89%8B%E8%AE%B0/">← Prev Python随手记</a><span style="color: #fe2"> | </span><a href="/2018/07/11/SQL%E6%B3%A8%E5%85%A5/">SQL注入 Next →</a><hr></div><div id="bottom-btn"><a id="to-index" href="#post-index" title="index">≡</a><a id="to-top" href="#post-title" title="to top">∧</a></div><div id="Valine"></div><script>new Valine({
+ el: '#Valine'
+ , appId: ''
+ , appKey: ''
+ , placeholder: '此条评论委托企鹅物流发送'
+})</script></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><a target="_blank" rel="noopener" href="https://github.com/giorgiopeng" id="avatar"><img src="https://avatars.githubusercontent.com/u/34415646?s=400&amp;u=f92ecb53f2f9fb9a9a5b054d6d56239fc1a80f0f&amp;v=4" alt="Avatar"></a><h1 id="Dr"><a target="_blank" rel="noopener" href="https://github.com/GiorgioPeng"> Dr.Giorgio</a></h1><section id="total"><a id="total-archives" href="/archives"><span class="total-title">Archives Total:</span><span class="total-number">18</span></a><div id="total-tags"><span class="total-title">Tags:</span><span class="total-number">3</span></div><div id="total-categories"><span class="total-title">Categories:</span><span class="total-number">11</span></div></section></div><div id="aside-block"></div><footer><nobr><span class="text-title">©</span><span class="text-content">2016 to 2022</span></nobr><wbr><nobr><span class="text-title">ICP</span><span class="text-content">——无——</span></nobr><wbr><wbr></footer></aside></main><canvas id="canvas-dust"></canvas><script src="/js/arknights.js"></script><script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/10.1.2/highlight.min.js"></script></body></html>
