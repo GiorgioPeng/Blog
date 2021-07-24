@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>ASurveyOnEmbeddingDynamicGraphs阅读笔记 | Hexo</title><script src="https://cdn.bootcss.com/valine/1.4.4/Valine.min.js"></script><script src="https://cdn.bootcdn.net/ajax/libs/mermaid/8.8.2/mermaid.min.js"></script><script>mermaid.initialize({
+  startOnLoad: true
+  , theme: 'dark'
+});</script><link rel="stylesheet" href="/css/arknights.css"><link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/highlight.js/10.1.2/styles/atom-one-dark-reasonable.min.css"><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><meta name="generator" content="Hexo 5.4.0"></head><body><header><nav><a href="/">Home</a><a href="/archives/">Archives</a></nav></header><main><article><div id="post-bg"><div id="post-title"><h1>ASurveyOnEmbeddingDynamicGraphs阅读笔记</h1><hr></div><div id="post-content"><h1 id="A-Survey-on-Embedding-Dynamic-Graphs-阅读笔记"><a href="#A-Survey-on-Embedding-Dynamic-Graphs-阅读笔记" class="headerlink" title="A Survey on Embedding Dynamic Graphs 阅读笔记"></a>A Survey on Embedding Dynamic Graphs 阅读笔记</h1><h2 id="论文信息"><a href="#论文信息" class="headerlink" title="论文信息"></a>论文信息</h2><p>Barros, C.D., Mendonça, M.R., Vieira, A.B. and Ziviani, A., 2021. A Survey on Embedding Dynamic Graphs. arXiv preprint arXiv:2101.01229.</p>
+<h2 id="文献数据"><a href="#文献数据" class="headerlink" title="文献数据"></a>文献数据</h2><h3 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h3><p>总览各种 <strong>动态图嵌入(dynamic graph embedding)</strong> 方法，讨论其基础和最新发展动向。</p>
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><h3 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h3><p><strong>图结构</strong> 网络存在于大量自然界关系中， <strong>图感知学习（graph-aware learning)</strong> 适用范围广，常使用 <strong>图嵌入（graph embedding)</strong> 对图片进行降维。<br>先前的工作主要重点在静态图，或者是在特定时间戳存在联系的图, 或者随着时间推移节点聚合成单个静态图。</p>
+<h3 id="挑战"><a href="#挑战" class="headerlink" title="挑战"></a>挑战</h3><ol>
+<li>如何进行时域建模（针对连续时间和离散时间）？[ ]</li>
+<li>哪些动态行为应该被记录（捕获）？[ ]</li>
+<li>哪些时间跨度应该在向量空间中表示？（生采样？降采样？不变？）[ ]</li>
+</ol>
+<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><ol>
+<li>介绍标准的动态图嵌入定义，讨论不同的动态图模型</li>
+<li>介绍一些嵌入的问题（如嵌入的输出和输入）</li>
+<li>探索和分类被捕获的不同的动态图行为，描述现有方法，讨论相似性和差异</li>
+<li>最后提出详细的分类</li>
+</ol>
+<h3 id="结果｜贡献"><a href="#结果｜贡献" class="headerlink" title="结果｜贡献"></a>结果｜贡献</h3><ol>
+<li>介绍一种基于问题设置的动态图分类拓展图嵌入的输入和输出去处理时间不一致 和 时域嵌入 [ ]</li>
+<li>讨论了嵌入模型捕获的不同动态行为（如拓扑结构迭代) [ ]</li>
+<li>详细分析了动态图的嵌入技术，进行了方法的分类和对比 [ ]</li>
+<li>列举了动态图嵌入的几个应用基于其关注的拓扑结构（如关注点、边等） [ ]</li>
+<li>讨论了未来的研究方向 [ ]</li>
+</ol>
+<h2 id="自己的想法"><a href="#自己的想法" class="headerlink" title="自己的想法"></a>自己的想法</h2><ol>
+<li>动态图（dynamic graph): 节点和边随时间被添加或者移除，标记或者其他属性也可能变化</li>
+<li>静态图表述： G = (V,E) , 邻接矩阵：存在边为1，否则对应位置为0</li>
+<li>静态图拓展： 有向｜加权｜异构（点、边的种类多余一种）</li>
+<li>两点相似评判<ol>
+<li>一阶估计值：大小取决于两点间的连接强度（如边的权重大小）</li>
+<li>二阶估计值：大小取决于两点邻接点的拓扑结构的相似性</li>
+</ol>
+ <img src="一、二阶估计值的解释图片.jpeg" alt="一、二阶估计值的解释图片" style="width:300px;height:300px;margin-top:10px">
+ 
+<ol start="3">
+<li>高阶估计值：Katz Centrality 评判（后期需要阅读一下，没了解过）</li>
+</ol>
+</li>
+<li>嵌入纬度远远小于节点个数</li>
+</ol>
+<hr>
+<ol start="6">
+<li>动态图表示法1</li>
+</ol>
+<img src="动态图表示法1.jpeg" alt="动态图表示法1" style="width:1000px;height:300px">
+
+<h2 id="为什么要读这篇文章"><a href="#为什么要读这篇文章" class="headerlink" title="为什么要读这篇文章"></a>为什么要读这篇文章</h2><h2 id="文献总结"><a href="#文献总结" class="headerlink" title="文献总结"></a>文献总结</h2><div id="paginator"></div></div><div id="post-footer"><hr><a href="/2021/07/24/%E5%85%B3%E4%BA%8E%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95%E7%9A%84%E7%90%86%E8%A7%A3/">← Prev 关于梯度下降法的理解</a><span style="color: #fe2"> | </span><a href="/2020/06/11/%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%9C%A8centos%E4%B8%8A%E5%8F%91%E5%B8%83create-react-app%E7%9A%84%E7%BB%8F%E5%8E%86/">记一次在centos上发布create-react-app的经历 Next →</a><hr></div><div id="bottom-btn"><a id="to-index" href="#post-index" title="index">≡</a><a id="to-top" href="#post-title" title="to top">∧</a></div><div id="Valine"></div><script>new Valine({
+ el: '#Valine'
+ , appId: ''
+ , appKey: ''
+ , placeholder: '此条评论委托企鹅物流发送'
+})</script></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><a target="_blank" rel="noopener" href="https://github.com/giorgiopeng" id="avatar"><img src="https://avatars.githubusercontent.com/u/34415646?s=400&amp;u=f92ecb53f2f9fb9a9a5b054d6d56239fc1a80f0f&amp;v=4" alt="Avatar"></a><h1 id="Dr"><a target="_blank" rel="noopener" href="https://github.com/GiorgioPeng"> Dr.Giorgio</a></h1><section id="total"><a id="total-archives" href="/archives"><span class="total-title">Archives Total:</span><span class="total-number">20</span></a><div id="total-tags"><span class="total-title">Tags:</span><span class="total-number">4</span></div><div id="total-categories"><span class="total-title">Categories:</span><span class="total-number">12</span></div></section></div><div id="aside-block"></div><footer><nobr><span class="text-title">©</span><span class="text-content">2016 to 2022</span></nobr><wbr><nobr><span class="text-title">ICP</span><span class="text-content">——无——</span></nobr><wbr><wbr></footer></aside></main><canvas id="canvas-dust"></canvas><script src="/js/arknights.js"></script><script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/10.1.2/highlight.min.js"></script></body></html>
