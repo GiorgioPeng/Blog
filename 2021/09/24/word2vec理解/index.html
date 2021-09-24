@@ -1,0 +1,36 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>word2vec理解 | Hexo</title><script src="https://cdn.bootcss.com/valine/1.4.4/Valine.min.js"></script><script src="https://cdn.bootcdn.net/ajax/libs/mermaid/8.8.2/mermaid.min.js"></script><script>mermaid.initialize({
+  startOnLoad: true
+  , theme: 'dark'
+});</script><link rel="stylesheet" href="/css/arknights.css"><link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/highlight.js/10.1.2/styles/atom-one-dark-reasonable.min.css"><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><meta name="generator" content="Hexo 5.4.0"></head><body><header><nav><a href="/">Home</a><a href="/archives/">Archives</a></nav></header><main><article><div id="post-bg"><div id="post-title"><h1>word2vec理解</h1><hr></div><div id="post-content"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>类似 auto encoder, 这个也是模型其实并不复杂，只是想法相当新颖，并且也是只是用了模型的部分。</p>
+<h1 id="模型构建"><a href="#模型构建" class="headerlink" title="模型构建"></a>模型构建</h1><p>本质上这个模型可以简化成3层结构。  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">输入 =&gt; 隐藏层 =&gt; 输出  <br></code></pre></td></tr></table></figure>
+<p>模型的最终结果是输出一个词，模型给出可能出现的周围的词。  </p>
+<p>比如： 输出 “我”<br>模型可能给出： 帅气的｜美丽的｜是｜在<br>这些词通常用在“我”的周围。</p>
+<h1 id="数据构建示例"><a href="#数据构建示例" class="headerlink" title="数据构建示例"></a>数据构建示例</h1><p>这里假设窗口大小为3.<br><img src="./word2vec%E7%90%86%E8%A7%A3/input2output.jpeg" alt="数据构建示例"></p>
+<p>当然我们首先需要使用one-hot编码对输入进行编码。<br>假设一共有1000种输入，并且she是第三种输入， 那么 she 可以表示为 [0,0,1,0,0,….,0,]，得到了一个1000长度的输入张量<br>其他词同理。  </p>
+<p>与此对应，输出也是一个1000长度的张量，但是每一位都是概率值，并且各位和为1（因为经过了softmax层）<br>概率最大的位置就是模型给出的预测词对应的索引，可以反查输入到one-hot的映射表得到最终结果。</p>
+<h1 id="模型细节"><a href="#模型细节" class="headerlink" title="模型细节"></a>模型细节</h1><ol>
+<li>假设隐藏层有256个神经元。  </li>
+<li>全连接。</li>
+</ol>
+<p>那么这 1000x1 的张量经过隐藏层会变成 1000x256 的张量。(每一个元素会分别和256个神经元操作，总共1000个)<br><img src="./word2vec%E7%90%86%E8%A7%A3/hidden.jpeg" alt="输出到隐藏层"></p>
+<p>这样我们实现了对每个词描述的维度从 1=&gt;256 的转换，我们就可以把这长度为 256 的向量拿出来，作为这个词的向量表示。</p>
+<p>我们也可以将隐藏层张量视为一个查询表</p>
+<blockquote>
+<p>被引用文章中两幅图很形象<br>词维度转换<br><img src="http://mccormickml.com/assets/word2vec/word2vec_weight_matrix_lookup_table.png" alt="a"><br>词向量到查询表<br><img src="http://mccormickml.com/assets/word2vec/matrix_mult_w_one_hot.png" alt="把词向量视为查询表"></p>
+</blockquote>
+<h2 id="到此我们就完成了从词到向量的整个步骤，至于输出层，暂时就没啥用了。模型截断到这里就解决任务了"><a href="#到此我们就完成了从词到向量的整个步骤，至于输出层，暂时就没啥用了。模型截断到这里就解决任务了" class="headerlink" title="到此我们就完成了从词到向量的整个步骤，至于输出层，暂时就没啥用了。模型截断到这里就解决任务了  "></a><strong>到此我们就完成了从词到向量的整个步骤，至于输出层，暂时就没啥用了。模型截断到这里就解决任务了</strong>  </h2><p>更多内容请看引用</p>
+<h1 id="reference｜引用"><a href="#reference｜引用" class="headerlink" title="reference｜引用"></a>reference｜引用</h1><p><a target="_blank" rel="noopener" href="http://mccormickml.com/2016/04/19/word2vec-tutorial-the-skip-gram-model/">McCormick, C. (2016, April 19). Word2Vec Tutorial - The Skip-Gram Model.</a></p>
+<div id="paginator"></div></div><div id="post-footer"><hr><a href="/2021/09/10/A-Gentle-Introduction-to-Graph-Neural-Networks-%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/">A Gentle Introduction to Graph Neural Networks 阅读笔记 Next →</a><hr></div><div id="bottom-btn"><a id="to-index" href="#post-index" title="index">≡</a><a id="to-top" href="#post-title" title="to top">∧</a></div><div id="Valine"></div><script>new Valine({
+ el: '#Valine'
+ , appId: ''
+ , appKey: ''
+ , placeholder: '此条评论委托企鹅物流发送'
+})</script></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><a target="_blank" rel="noopener" href="https://github.com/giorgiopeng" id="avatar"><img src="https://avatars.githubusercontent.com/u/34415646?s=400&amp;u=f92ecb53f2f9fb9a9a5b054d6d56239fc1a80f0f&amp;v=4" alt="Avatar"></a><h1 id="Dr"><a target="_blank" rel="noopener" href="https://github.com/GiorgioPeng"> Dr.Giorgio</a></h1><section id="total"><a id="total-archives" href="/archives"><span class="total-title">Archives Total:</span><span class="total-number">22</span></a><div id="total-tags"><span class="total-title">Tags:</span><span class="total-number">4</span></div><div id="total-categories"><span class="total-title">Categories:</span><span class="total-number">13</span></div></section></div><div id="aside-block"></div><footer><nobr><span class="text-title">©</span><span class="text-content">2016 to 2022</span></nobr><wbr><nobr><span class="text-title">ICP</span><span class="text-content">——无——</span></nobr><wbr><wbr></footer></aside></main><canvas id="canvas-dust"></canvas><script src="/js/arknights.js"></script><script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/10.1.2/highlight.min.js"></script></body></html>
