@@ -16,13 +16,13 @@
 </ol>
 <h1 id="描述图的一些标记符号"><a href="#描述图的一些标记符号" class="headerlink" title="描述图的一些标记符号"></a>描述图的一些标记符号</h1><p>V: 节点属性（如节点标识符，邻接点数量）<br>E: 边属性和方向（如边标识符，边权重）<br>U: 全局属性（如节点总数，最长路径）</p>
 <h1 id="图数据来源何处"><a href="#图数据来源何处" class="headerlink" title="图数据来源何处"></a>图数据来源何处</h1><ol>
-<li>社交网络<br><img src="./A-Gentle-Introduction-to-Graph-Neural-Networks-%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E7%A4%BE%E4%BA%A4%E7%BD%91%E7%BB%9C.png" alt="社交网络"></li>
-<li>图片=》图<br>图片可以用像素点表示，也可以用邻接矩阵表示不同像素点之间的连接情况，更能视作一个十分规整的图,<br><img src="./A-Gentle-Introduction-to-Graph-Neural-Networks-%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%9B%BE%E7%89%87-%E5%9B%BE.png" alt="图片-图"></li>
-<li>文本=》图<br>文本通常是有序的，可以用一个类似对角阵的矩阵表示，更能自然的用图结构来表示。<br><img src="./A-Gentle-Introduction-to-Graph-Neural-Networks-%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E6%96%87%E6%9C%AC-%E5%9B%BE.png" alt="文本-图"><blockquote>
+<li>社交网络<br><img src="./%E7%A4%BE%E4%BA%A4%E7%BD%91%E7%BB%9C.png" alt="社交网络"></li>
+<li>图片=》图<br>图片可以用像素点表示，也可以用邻接矩阵表示不同像素点之间的连接情况，更能视作一个十分规整的图,<br><img src="./%E5%9B%BE%E7%89%87-%E5%9B%BE.png" alt="图片-图"></li>
+<li>文本=》图<br>文本通常是有序的，可以用一个类似对角阵的矩阵表示，更能自然的用图结构来表示。<br><img src="./%E6%96%87%E6%9C%AC-%E5%9B%BE.png" alt="文本-图"><blockquote>
 <p>但是上述这两种数据（文本和图）本来就有很规整的数据结构，用图反而可能多此一举，而且这些数据可能会有个相同的邻接矩阵表示（比如两张一样大小的图片）</p>
 </blockquote>
 </li>
-<li>分子结构<br>分子结构用图表示是相当自然的，因为相同的图往往代表着同一类分子（也会不同比如同分异构体）<br><img src="./A-Gentle-Introduction-to-Graph-Neural-Networks-%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/%E5%88%86%E5%AD%90%E7%BB%93%E6%9E%84.png" alt="分子结构"></li>
+<li>分子结构<br>分子结构用图表示是相当自然的，因为相同的图往往代表着同一类分子（也会不同比如同分异构体）<br><img src="./%E5%88%86%E5%AD%90%E7%BB%93%E6%9E%84.png" alt="分子结构"></li>
 </ol>
 <div id="paginator"></div></div><div id="post-footer"><hr><a href="/2021/09/24/word2vec%E7%90%86%E8%A7%A3/">← Prev word2vec理解</a><span style="color: #fe2"> | </span><a href="/2021/07/24/%E5%85%B3%E4%BA%8E%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95%E7%9A%84%E7%90%86%E8%A7%A3/">关于梯度下降法的理解 Next →</a><hr></div><div id="bottom-btn"><a id="to-index" href="#post-index" title="index">≡</a><a id="to-top" href="#post-title" title="to top">∧</a></div><div id="Valine"></div><script>new Valine({
  el: '#Valine'
