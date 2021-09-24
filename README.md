@@ -7,8 +7,12 @@ hexo s
 
 ## 生成新的文章
 ```
-hexo new "文章标题"
+hexo new [layout] "文章标题"
 ```
+layout 可选三种:
+post(常用)
+page
+draft
 
 ## 生成
 ```

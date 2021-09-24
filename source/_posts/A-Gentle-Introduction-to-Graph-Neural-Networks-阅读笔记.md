@@ -1,0 +1,30 @@
+---
+title: A Gentle Introduction to Graph Neural Networks 阅读笔记
+date: 2021-09-10 11:38:21
+tags: 学习笔记
+categories: Graph
+---
+# 文章主要阐述部分
+1. 什么数据能够自然的用图展示？
+2. 图数据与其他数据的不同
+3. 构建现代图神经网络
+4. 模型展示
+
+# 描述图的一些标记符号
+V: 节点属性（如节点标识符，邻接点数量）
+E: 边属性和方向（如边标识符，边权重）
+U: 全局属性（如节点总数，最长路径）
+
+# 图数据来源何处
+1. 社交网络
+![社交网络](./A-Gentle-Introduction-to-Graph-Neural-Networks-阅读笔记/社交网络.png)
+2. 图片=》图
+图片可以用像素点表示，也可以用邻接矩阵表示不同像素点之间的连接情况，更能视作一个十分规整的图,
+![图片-图](./A-Gentle-Introduction-to-Graph-Neural-Networks-阅读笔记/图片-图.png)
+3. 文本=》图
+文本通常是有序的，可以用一个类似对角阵的矩阵表示，更能自然的用图结构来表示。
+![文本-图](./A-Gentle-Introduction-to-Graph-Neural-Networks-阅读笔记/文本-图.png)
+> 但是上述这两种数据（文本和图）本来就有很规整的数据结构，用图反而可能多此一举，而且这些数据可能会有个相同的邻接矩阵表示（比如两张一样大小的图片）
+4. 分子结构
+分子结构用图表示是相当自然的，因为相同的图往往代表着同一类分子（也会不同比如同分异构体）
+![分子结构](./A-Gentle-Introduction-to-Graph-Neural-Networks-阅读笔记/分子结构.png)
