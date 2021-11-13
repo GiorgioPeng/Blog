@@ -1,0 +1,69 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>图卷积神经网络理论基础阅读 | Giorgio's Blog</title><script src="https://cdn.bootcss.com/valine/1.4.4/Valine.min.js"></script><script src="https://cdn.bootcdn.net/ajax/libs/mermaid/8.8.2/mermaid.min.js"></script><script>mermaid.initialize({
+  startOnLoad: true
+  , theme: 'dark'
+});</script><link rel="stylesheet" href="/css/arknights.css"><link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/highlight.js/10.1.2/styles/atom-one-dark-reasonable.min.css"><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><meta name="generator" content="Hexo 5.4.0"></head><body><header><nav><a href="/">Home</a><a href="/archives/">Archives</a></nav></header><main><article><div id="post-bg"><div id="post-title"><h1>图卷积神经网络理论基础阅读</h1><hr></div><div id="post-content"><p><a target="_blank" rel="noopener" href="http://xtf615.com/2019/02/24/gcn/">原文地址</a></p>
+<h1 id="从传统卷积到图卷积"><a href="#从传统卷积到图卷积" class="headerlink" title="从传统卷积到图卷积"></a>从传统卷积到图卷积</h1><h2 id="为什么不通用"><a href="#为什么不通用" class="headerlink" title="为什么不通用"></a>为什么不通用</h2><p>在传统卷积中（比如图像，文本），都是非常标准的数据，能够很自然的运用矩阵等结构化方式进行表示（比如RGB图像就是一个三通道二维矩阵）。</p>
+<p>但是图通常来说用矩阵进行表示是不太恰当的，对于很多的图来说，如果使用邻接矩阵、度矩阵等来进行表示的话，我们会发现这个矩阵过于稀疏而且对称。这无疑浪费了很多的资源。</p>
+<p>因此对于规整的数据，我们可以一个卷积核（比如3*3）一卷到底，但是对于图这种不太规整的数据（每个点的邻接点数量不同等问题），我们没有办法一卷到底。</p>
+<h2 id="解决的一种方法"><a href="#解决的一种方法" class="headerlink" title="解决的一种方法"></a>解决的一种方法</h2><p>我们知道，傅里叶变换的有一个性质:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">两个函数的 卷积 等于 每个函数分别进行傅里叶变换后的 乘积 再做逆傅里叶变换  <br></code></pre></td></tr></table></figure>
+
+<p>也就是，如果将数据转化到频域，我们可能就能很轻松的对 <strong>图</strong> 结构进行卷积操作，这样能够用现存的很多研究成果和方法在图结构数据中（类比self-attention等的跨领域使用）。</p>
+<h1 id="傅里叶变换"><a href="#傅里叶变换" class="headerlink" title="傅里叶变换"></a>傅里叶变换</h1><h2 id="傅里叶变化是什么"><a href="#傅里叶变化是什么" class="headerlink" title="傅里叶变化是什么"></a>傅里叶变化是什么</h2><p>原文中说的很好，这里直接拿过来。</p>
+<blockquote>
+<p>从数学角度，傅立叶变换就是将<strong>周期函数</strong>转化为一组<strong>正交基</strong>下的坐标表示，这个坐标表示就是傅立叶变换的结果。换句话说，周期函数是这些正交基的<strong>线性组合</strong>(向量的叠加), 线性组合系数构成的向量就是傅立叶变换的结果。</p>
+</blockquote>
+<blockquote>
+<p>从信号处理领域角度，傅里叶变换将一个周期函数从<strong>时域</strong>（时间与振幅的关系）转化为<strong>频域</strong>（频率与振幅的关系）。做个类比，正交基选择的是正弦函数，每个正弦函数有个频率参数值，而每个正弦函数的振幅参数就是该基下对应的坐标值。所有正弦函数的振幅构成的<strong>向量</strong>就是傅立叶变换的结果。</p>
+</blockquote>
+<h2 id="详细过程可视化"><a href="#详细过程可视化" class="headerlink" title="详细过程可视化"></a>详细过程可视化</h2><p>下图详细阐述了傅里叶变换把一个函数从时域转化成频域的过程<br><img src="https://upload.wikimedia.org/wikipedia/commons/2/2b/Fourier_series_and_transform.gif" alt="傅里叶变换动图"></p>
+<h2 id="具体怎么做"><a href="#具体怎么做" class="headerlink" title="具体怎么做"></a>具体怎么做</h2><p>首先我们应该知道，对于任何<b id='1'>周期函数</b>,都可以使用傅里叶级数展开，把他们变成有限个或者无限个不同<strong>频率</strong>和<strong>振幅</strong>的正（余）弦函数的线性组合。</p>
+<blockquote>
+<p>当然，对于非周期函数我们可以将它视为一个周期为∞的周期函数  </p>
+</blockquote>
+<p><img src="https://bkimg.cdn.bcebos.com/formula/5f36ce6b84684c8206c4cbe52e9457a4.svg" alt="傅里叶级数展开">（1）</p>
+<p>式中P是周期，x是时间，A<sub>i</sub>是振幅。  </p>
+<p>频率</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">w = 2πn/P,   n&gt;=1<br></code></pre></td></tr></table></figure>
+
+<p>在展开后，如果我们固定时间x，把频率 w 作为变量，我们就可以得到一幅频域图。  </p>
+<p><img src="http://xtf615.com/picture/machine-learning/fourier_series_transform.jpg" alt="掐死教程"></p>
+<p>注意：频域图像横坐标是离散的，由于n的变化，它一定是2π/P的整数倍。所有的纵坐标都是振幅。</p>
+<h2 id="傅里叶级数到傅里叶变换"><a href="#傅里叶级数到傅里叶变换" class="headerlink" title="傅里叶级数到傅里叶变换"></a>傅里叶级数到傅里叶变换</h2><p>从下图中我们可以看到周期与频域图像的关系，当周期越大时，频域图像就越“连续”。<br><img src="http://xtf615.com/picture/machine-learning/fourier_transform_jishu.png" alt="周期与频域图像的关系">  </p>
+<p>因为周期与频域成反比（w = 2πn/P），周期增大时，w减小，n*w也减小，不同频率间隔也就越紧凑。<br>因此，当周期为∞大时，整个频域图像曲线会连起来，这时候我们就需要把求和变成积分。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">f(x) = ∑F(x)sin(wx) = ∫F(x)sin(wx)<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>这里为了方便，把<a href='#1'>公式1</a>简写了</p>
+</blockquote>
+<p>当然，也可以用<a target="_blank" rel="noopener" href="https://www.matongxue.com/madocs/8.html">欧拉公式</a>来改写傅里叶变换，实现 <strong>时域</strong> 和 <strong>复频域</strong> 之间的转化  </p>
+<p><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/58ef40b0b675ac15702977463aa5bcb54cb0e55f" alt="复频域到时域"></p>
+<p>同时，也可以求出复频域到时域的变换（通过欧拉公式的共轭形式抵消掉复部）<br><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/790f6ea709f777928e0b7b0e9c9db82f09f4e8ea" alt="傅里叶逆变换"></p>
+<h1 id="graph傅里叶变换"><a href="#graph傅里叶变换" class="headerlink" title="graph傅里叶变换"></a>graph傅里叶变换</h1><h2 id="怎么进行"><a href="#怎么进行" class="headerlink" title="怎么进行"></a>怎么进行</h2><ol>
+<li>在Graph中，拉普拉斯算子为拉普拉斯矩阵</li>
+<li>对拉普拉斯矩阵进行特征分解，得到特征向量和特征值（这两者一一对应，类似之间存在了一个函数双射）</li>
+<li>我们可以把传统傅里叶变换中，正弦函数替换成拉普拉斯矩阵的特征向量（正弦函数与频率一一对应，特征向量与特征值一一对应）</li>
+</ol>
+<p>这一的替换的根源意义在于，Graph拉普拉斯矩阵的特征向量作为一组基的话，这组基是Graph上Dirichlet Energy最小的基</p>
+<p>通过这一系列类比、桥接，实现了图上的傅里叶变换。</p>
+<h2 id="拉普拉斯算子"><a href="#拉普拉斯算子" class="headerlink" title="拉普拉斯算子"></a>拉普拉斯算子</h2><p>非混合二阶偏导数的和，能够反映函数的平滑程度  </p>
+<p>对图像（假定只有上下左右共4个自由度(1,0),(−1,0),(0,1),(0,−1)，也就是图中每一个点，被扰动都只能变到上、下、左、右其中一个位置）求拉普拉斯算子：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">(Δf)x,y=∂f(x,y)/∂x2+∂f(x,y)/∂y2<br>       ≈f(x+1,y)+f(x−1,y)−2f(x,y)+f(x,y+1)+f(x,y−1)−2f(x,y)<br>       =f(x+1,y)+f(x−1,y)+f(x,y+1)+f(x,y−1)−4f(x,y)<br>       =[f(x+1,y)−f(x,y)]+[f(x−1,y)−f(x,y)]+[f(x,y+1)−f(x,y)]+[f(x,y−1)−f(x,y)]<br></code></pre></td></tr></table></figure>
+<p>我们可以看到 f(x+1,y)−f(x,y) 相当于是从点(x,y)变化到点(x+1,y)获得的增益；同理，f(x−1,y)−f(x,y) 也就可看出从点(x,y)变化到点(x+1,y)获得的增益。这样，<strong>拉普拉斯算子约等于在所有自由度上进行微小变化后获得的增益</strong>  </p>
+<p>同理，推广到Graph上，每一个点的自由度为所有一阶邻接点的个数（该点的度）,同时，为了便于衡量每次变化的增益，这里直接使用了连接两点之间边的权重(假设为1)作为两点之间的增益。  </p>
+<p>因此对某个点的拉普拉斯算子(所有自由度上变化增益)为：  </p>
+<p>(Δf)<sub>i</sub> = Σ<sub>j∈邻接点</sub>w<sub>ij</sub>(V<sub>i</sub> - V<sub>j</sub>)<br>   = Σ<sub>j∈邻接点</sub>w<sub>ij</sub>V<sub>i</sub> - Σ<sub>j∈邻接点</sub>w<sub>ij</sub>V<sub>j</sub><br>   = D<sub>i</sub>V<sub>i</sub> - W<sub>i</sub>V<sub>i</sub><br>   = (D<sub>i</sub>-W<sub>i</sub>)V<sub>i</sub></p>
+<p>其中，D<sub>i</sub>是i点的度，W<sub>i</sub>是i点的邻接矩阵，w<sub>ij</sub>是连接点i,j的边的权重（这里假定是1）<br>上式可以看成Graph的拉普拉斯算子作用在Graph某一结点上的结果。</p>
+<p>我们也称 L = D-W 为Graph的拉普拉斯矩阵，也就是Graph的拉普拉斯算子。</p>
+<div id="paginator"></div></div><div id="post-footer"><hr><a href="/2021/09/24/word2vec%E7%90%86%E8%A7%A3/">word2vec理解 Next →</a><hr></div><div id="bottom-btn"><a id="to-index" href="#post-index" title="index">≡</a><a id="to-top" href="#post-title" title="to top">∧</a></div><div id="Valine"></div><script>new Valine({
+ el: '#Valine'
+ , appId: ''
+ , appKey: ''
+ , placeholder: '此条评论委托企鹅物流发送'
+})</script></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><a target="_blank" rel="noopener" href="https://github.com/giorgiopeng" id="avatar"><img src="https://avatars.githubusercontent.com/u/34415646?s=400&amp;u=f92ecb53f2f9fb9a9a5b054d6d56239fc1a80f0f&amp;v=4" alt="Avatar"></a><h1 id="Dr"><a target="_blank" rel="noopener" href="https://github.com/GiorgioPeng"> Dr.Giorgio</a></h1><section id="total"><a id="total-archives" href="/archives"><span class="total-title">Archives Total:</span><span class="total-number">23</span></a><div id="total-tags"><span class="total-title">Tags:</span><span class="total-number">5</span></div><div id="total-categories"><span class="total-title">Categories:</span><span class="total-number">14</span></div></section></div><div id="aside-block"></div><footer><nobr><span class="text-title">©</span><span class="text-content">2016 to 2022</span></nobr><wbr><nobr><span class="text-title">ICP</span><span class="text-content">——无——</span></nobr><wbr><wbr></footer></aside></main><canvas id="canvas-dust"></canvas><script src="/js/arknights.js"></script><script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/10.1.2/highlight.min.js"></script></body></html>
